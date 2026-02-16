@@ -13,7 +13,7 @@ public enum SceneType
 {
     BootScene,
     MainMenuScene,
-    GameScene,// またはStageNScene
+    Stage1Scene,// またはStageNScene
     // 追加のシーンタイプをここに定義
 }
 
@@ -40,8 +40,6 @@ public class SceneLoader : ISceneLoader
         // シーンの初期化が完了するまで待機
         // ロード先のシーンは、初期化が完了したら
         // ISceneInitializationPublisher.NotifyInitializationComplete()を呼び出す必要があります
-        
-       
     }
 }
 }
