@@ -957,7 +957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageSystem.CameraSystem
   rotationSpeed: 1
-  distance: 5
+  distance: 10
   easeType: 4
 --- !u!1 &1772199724
 GameObject:

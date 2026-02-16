@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
-using Cysharp.Threading.Tasks;
-using VContainer;
 
 namespace StageSystem
 {
@@ -20,8 +18,8 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     
     [Header("DOTWEEN")]
     [SerializeField] Ease easeType = Ease.InOutSine;
-    
-    public void Start()
+
+    void Start()
     {
         _rootObject = transform.parent;
         transform.position = _rootObject.position - _rootObject.forward * distance;
@@ -44,6 +42,7 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     
         // カメラの位置と回転を移動
         Sequence seq = DOTween.Sequence();
+        seq.SetAutoKill(true);
         seq.Append(transform.DOMove(targetPos, rotationSpeed).SetEase(easeType)); // TODO: playerを中心に回転させるようにする
         seq.Join(transform.DORotateQuaternion(targetRot, rotationSpeed).SetEase(easeType));
     }
