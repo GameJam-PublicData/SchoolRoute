@@ -16,7 +16,7 @@ public class PlayerJumpManager : MonoBehaviour
 {
     InputActions _inputActions;
     IReadOnlyGravitySystem _gravitySystem;
-    CancellationTokenSource _jumpCTS;
+    CancellationTokenSource _jumpCTS = new();
     bool _isJumping = true;
     int _groundCount;
 
@@ -37,7 +37,13 @@ public class PlayerJumpManager : MonoBehaviour
         _inputActions.Player.Jump.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
-        
+        //JumpAsync(_jumpCTS.Token).Forget();
+    }
+    public void Jump(float force)
+    {
+        _isJumping = true;
+        Debug.Log("Jump performed!!!!!");
+        _currentJumpForce = force;
     }
     
     void OnEnable()
@@ -50,15 +56,12 @@ public class PlayerJumpManager : MonoBehaviour
         Debug.Log("JumpInput");
         if (_isJumping == true) return;
         if(_groundCount <= 0) return;
-        _jumpCTS?.Cancel();
-        _jumpCTS = new CancellationTokenSource();
         _isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
-        JumpAsync(_jumpCTS.Token).Forget();
-
-         
+        _currentJumpForce = jumpForce;
     }
+    
     void OnJumpCanceled(InputAction.CallbackContext context)
     {
         _isJumpButtonPressed = false;
@@ -68,11 +71,13 @@ public class PlayerJumpManager : MonoBehaviour
         }
     }
     
-    async UniTask JumpAsync(CancellationToken token)
+    
+    public async UniTask JumpAsync(CancellationToken token)
     {
-        _currentJumpForce = jumpForce;
-        while (!token.IsCancellationRequested && _isJumping)
+        while (!token.IsCancellationRequested )
         {
+            await UniTask.Delay(100, cancellationToken: token);
+            if( _isJumping == false) continue;
             if(!_isJumpButtonPressed)
             {
                 _currentJumpForce -= jumpForce/3.5f;
@@ -85,8 +90,6 @@ public class PlayerJumpManager : MonoBehaviour
             {
                 _isJumpButtonPressed = false;
             }
-
-            await UniTask.Delay(100, cancellationToken: token);
         }
     }
 
