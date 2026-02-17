@@ -20,9 +20,10 @@ public class PlayerJumpManager : MonoBehaviour
     CancellationTokenSource _jumpCTS;
     bool _isJumping = true;
     int _groundCount;
-    Vector3 _lastGroundedPos;
+    Vector3 _groundedPosition = Vector3.zero;
     
-    [SerializeField] Fade fade;
+    [SerializeField] GameObject fadeObj;
+    Fade _fade;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -41,7 +42,23 @@ public class PlayerJumpManager : MonoBehaviour
         _inputActions.Player.Jump.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
-        
+
+        SetupFade();
+    }
+    
+    void SetupFade()
+    {
+        if (fadeObj == null)
+        {
+            Debug.LogError("フェードオブジェクトが割り当てられていません。インスペクターでfadeObjを設定してください。");
+            return;
+        }
+
+        _fade = fadeObj.GetComponent<Fade>();
+        if (_fade == null)
+        {
+            Debug.LogError("フェードオブジェクトにFadeコンポーネントが見つかりません。フェードオブジェクトとコンポーネントの設定を確認してください。");
+        }
     }
     
     void OnEnable()
@@ -96,17 +113,10 @@ public class PlayerJumpManager : MonoBehaviour
 
     void Update()
     {
-        if (_isJumping == false)
-        {
-            // 地面にいる場合は最後の地面の位置を更新
-            _lastGroundedPos = transform.localPosition;
-        }
-        else
-        {
-            Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
-            vec *= -1;// 重力の反対方向に移動
-            transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
-        }
+        if (_isJumping == false) return;
+        Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
+        vec *= -1;// 重力の反対方向に移動
+        transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
     }
 
 
@@ -120,28 +130,40 @@ public class PlayerJumpManager : MonoBehaviour
             Debug.Log("Now Grounded!");
             transform.DOKill();
         }
+        if(other.gameObject.CompareTag("SavePoint"))
+        {
+            _groundedPosition = other.transform.position;
+        }
         if(other.gameObject.CompareTag("DeathZone"))
         {
+            Debug.Log("Entered Death Zone!");
             // 元の位置に戻る処理
             var hpManager = GetComponent<PlayerHPManager>();
             if (hpManager.TakeDamage(1))
             {
-                SetLastGroundedPos().Forget();
+                Debug.Log("Player Died!");
+                SetLastGroundedPos();
             }
         }
     }
     
-    async UniTask SetLastGroundedPos(float duration = 1f)
+    async void SetLastGroundedPos(float duration = 1f)
     {
+        if (_fade == null)
+        {
+            Debug.LogError("フェードコンポーネントが見つかりません。フェードオブジェクトとコンポーネントの設定を確認してください。");
+            return;
+        }
+
         // 死んだときのフェードインとフェードアウトの処理
-        fade.FadeIn(duration);
-        await UniTask.Delay(TimeSpan.FromSeconds(duration));
-        
-        // プレイヤーを最後の地面の位置に戻す
-        transform.localPosition = _lastGroundedPos;
-        
+        _fade.FadeIn(duration);
+        await UniTask.Delay(TimeSpan.FromSeconds(duration + 0.25f)); // フェードインが完了するまで待機
+
+        // TODO: セーブポイントに戻す処理を実装
+        transform.position = _groundedPosition;
+
         // フェードアウト
-        fade.FadeOut(duration);
+        _fade.FadeOut(duration);
     }
 
     void OnTriggerExit(Collider other)
