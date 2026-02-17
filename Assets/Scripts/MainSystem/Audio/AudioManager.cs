@@ -22,6 +22,9 @@ public enum AudioCategory
 //SE、BGM、ボイスなど
 public class AudioManager : MonoBehaviour
 {
+    //シングルトン
+    public static AudioManager Instance;
+    
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioSO audioSO;
     
@@ -35,6 +38,12 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         _bgmSource = CreateAudioSource("BGM", true);
+        
+        //シングルトン
+        if (Instance == null || Instance != this)
+        {
+            Instance = this;
+        }
         
         for (int i = 0; i < StartSESourceCount; i++)
         {

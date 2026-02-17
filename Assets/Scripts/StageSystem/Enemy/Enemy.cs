@@ -7,7 +7,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour,IEnemy
 {
     [SerializeField] float damage = 1f;
-    [SerializeField] AudioManager audioManager;
     
     /// <summary>
     /// ダメージを受けた時の処理
@@ -15,7 +14,7 @@ public class Enemy : MonoBehaviour,IEnemy
     /// <param name="damage">ダメージ量</param>
     public void TakeDamage(float damage)
     {
-        audioManager.PlaySE("EnemyDamageSE");
+        AudioManager.Instance.PlaySE("EnemyDamageSE");
         
         Destroy(gameObject);
     }

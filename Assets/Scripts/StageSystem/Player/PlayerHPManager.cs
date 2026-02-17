@@ -5,8 +5,6 @@ namespace StageSystem.Player
 {
 public class PlayerHPManager : MonoBehaviour
 {
-    [SerializeField] AudioManager audioManager;
-    
     [SerializeField] float MaxHP = 5f;
     float _currentHP;
     
@@ -18,7 +16,7 @@ public class PlayerHPManager : MonoBehaviour
     public bool TakeDamage(float damage)
     {
         _currentHP -= damage;
-        audioManager.PlaySE("PlayerDamageSE");
+        AudioManager.Instance.PlaySE("PlayerDamageSE");
         
         if (_currentHP <= 0){
             _currentHP = 0;
