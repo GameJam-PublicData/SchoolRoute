@@ -16,8 +16,13 @@ public class StageRouteData
 {
     public Direction GravityDirection;
     public Direction ForwardDirection;
+    public Direction CameraDirection;
     [SerializeField]Vector3 targetPosition;
     public Vector3 TargetPosition => targetPosition;
+    [SerializeField] Vector3 jumpTargetPosition = Vector3.zero;
+    public Vector3 JumpTargetPosition => jumpTargetPosition;
+    public float CameraDistance;
+    
     public float MoveSpeed;
 
 }
