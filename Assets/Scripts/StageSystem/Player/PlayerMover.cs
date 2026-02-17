@@ -8,6 +8,8 @@ public class PlayerMover : MonoBehaviour
 {
     [SerializeField] StageRouteSO stageRouteSO;
     IGravitySystem _gravitySystem;
+    
+    [SerializeField] CameraSystem cameraSystem;
 
     [Inject]
     public void Construct(IGravitySystem gravitySystem)
@@ -31,6 +33,8 @@ public class PlayerMover : MonoBehaviour
             _currentRouteIndex++;
             _targetPosition = GetTargetPosition(_currentRouteData);
             
+            //TODO:生沢へ　下のは仮です。
+            cameraSystem.SetRotation(_currentRouteData.ForwardDirection);
         }
         else
         {
