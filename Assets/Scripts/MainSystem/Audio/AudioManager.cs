@@ -22,6 +22,9 @@ public enum AudioCategory
 //SE、BGM、ボイスなど
 public class AudioManager : MonoBehaviour
 {
+    //シングルトン
+    public static AudioManager Instance;
+    
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioSO audioSO;
     
@@ -36,6 +39,12 @@ public class AudioManager : MonoBehaviour
     {
         _bgmSource = CreateAudioSource("BGM", true);
         
+        //シングルトン
+        if (Instance == null || Instance != this)
+        {
+            Instance = this;
+        }
+        
         for (int i = 0; i < StartSESourceCount; i++)
         {
             _seSources.Add(CreateAudioSource("SE", false));
@@ -45,7 +54,7 @@ public class AudioManager : MonoBehaviour
     AudioSource CreateAudioSource(string mixerGroup, bool loop)
     {
         var source = gameObject.AddComponent<AudioSource>();
-        source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(mixerGroup)[0];
+        //source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(mixerGroup)[0];
         source.loop = loop;
         source.spatialBlend = 0f; // 2D
         return source;
