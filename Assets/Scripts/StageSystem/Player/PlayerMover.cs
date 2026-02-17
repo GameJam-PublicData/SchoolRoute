@@ -1,12 +1,20 @@
 using System;
 using UnityEngine;
+using VContainer;
 
 namespace StageSystem.Player
 {
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] StageRouteSO stageRouteSO;
+    IGravitySystem _gravitySystem;
 
+    [Inject]
+    public void Construct(IGravitySystem gravitySystem)
+    {
+        _gravitySystem = gravitySystem;
+    }
+    
     StageRouteData _currentRouteData;
     int _currentRouteIndex = 0;
     Vector3 _targetPosition;
@@ -19,8 +27,10 @@ public class PlayerMover : MonoBehaviour
         if (_currentRouteIndex < stageRouteSO.RouteDataList.Count)
         {
             _currentRouteData = stageRouteSO.RouteDataList[_currentRouteIndex];
+            _gravitySystem.ChangeGravity(stageRouteSO.RouteDataList[_currentRouteIndex].GravityDirection);
             _currentRouteIndex++;
             _targetPosition = GetTargetPosition(_currentRouteData);
+            
         }
         else
         {

@@ -18,7 +18,7 @@ public class PlayerJumpManager : MonoBehaviour
     IReadOnlyGravitySystem _gravitySystem;
     CancellationTokenSource _jumpCTS;
     bool _isJumping = true;
-    [SerializeField]int _groundCount;
+    int _groundCount;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
