@@ -41,12 +41,17 @@ public class PlayerAttackManager : MonoBehaviour
     {
         if (_isAttacking) return;
         _isAttacking = true;
+        
         try
         {
+            // 攻撃範囲オブジェクトを有効化
             flickRangeObj.SetActive(true);
-            var sphere = flickRangeObj.GetComponent<Collider>();
-            var hits = Physics.OverlapSphere(sphere.bounds.center, sphere.bounds.extents.x);
             
+            // BoxColliderを使用して攻撃範囲内の敵を検出
+            var sphere = flickRangeObj.GetComponent<BoxCollider>();
+            var hits = Physics.OverlapBox(sphere.transform.position + sphere.center, sphere.size / 2, Quaternion.identity);
+            
+            // 攻撃範囲内の敵にダメージを与える
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent<IEnemy>(out var enemy))
@@ -55,6 +60,7 @@ public class PlayerAttackManager : MonoBehaviour
                 }
             }
             
+            // クールタイム
             await UniTask.Delay(TimeSpan.FromSeconds(attackTime));
         }
         catch (Exception ex)
