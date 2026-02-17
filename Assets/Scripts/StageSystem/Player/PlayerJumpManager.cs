@@ -19,6 +19,7 @@ public class PlayerJumpManager : MonoBehaviour
     CancellationTokenSource _jumpCTS;
     bool _isJumping = true;
     int _groundCount;
+    Vector3 _lastGroundedPos;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -53,6 +54,7 @@ public class PlayerJumpManager : MonoBehaviour
         _jumpCTS?.Cancel();
         _jumpCTS = new CancellationTokenSource();
         _isJumping = true;
+        _lastGroundedPos = transform.localPosition;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
         JumpAsync(_jumpCTS.Token).Forget();
@@ -108,6 +110,15 @@ public class PlayerJumpManager : MonoBehaviour
             _currentJumpForce = 0;
             Debug.Log("Now Grounded!");
             transform.DOKill();
+        }
+        if(other.gameObject.CompareTag("DeathZone"))
+        {
+            var hpManager = GetComponent<PlayerHPManager>();
+            if (hpManager.TakeDamage(1))
+            {
+                // TODO: 死亡処理と一定時間経過後にリスポーンする処理を追加
+                Debug.Log("Player has died!");
+            }
         }
     }
 
