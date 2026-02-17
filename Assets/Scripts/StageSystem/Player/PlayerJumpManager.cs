@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InputSystemActions;
+using StageSystem.Animation;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -20,6 +21,8 @@ public class PlayerJumpManager : MonoBehaviour
     bool _isJumping = true;
     int _groundCount;
     Vector3 _lastGroundedPos;
+    
+    [SerializeField] Fade fade;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -54,7 +57,6 @@ public class PlayerJumpManager : MonoBehaviour
         _jumpCTS?.Cancel();
         _jumpCTS = new CancellationTokenSource();
         _isJumping = true;
-        _lastGroundedPos = transform.localPosition;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
         JumpAsync(_jumpCTS.Token).Forget();
@@ -94,10 +96,17 @@ public class PlayerJumpManager : MonoBehaviour
 
     void Update()
     {
-        if(_isJumping == false) return;
-        Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
-        vec *= -1;// 重力の反対方向に移動
-        transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
+        if (_isJumping == false)
+        {
+            // 地面にいる場合は最後の地面の位置を更新
+            _lastGroundedPos = transform.localPosition;
+        }
+        else
+        {
+            Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
+            vec *= -1;// 重力の反対方向に移動
+            transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
+        }
     }
 
 
@@ -113,13 +122,26 @@ public class PlayerJumpManager : MonoBehaviour
         }
         if(other.gameObject.CompareTag("DeathZone"))
         {
+            // 元の位置に戻る処理
             var hpManager = GetComponent<PlayerHPManager>();
             if (hpManager.TakeDamage(1))
             {
-                // TODO: 死亡処理と一定時間経過後にリスポーンする処理を追加
-                Debug.Log("Player has died!");
+                SetLastGroundedPos().Forget();
             }
         }
+    }
+    
+    async UniTask SetLastGroundedPos(float duration = 1f)
+    {
+        // 死んだときのフェードインとフェードアウトの処理
+        fade.FadeIn(duration);
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
+        
+        // プレイヤーを最後の地面の位置に戻す
+        transform.localPosition = _lastGroundedPos;
+        
+        // フェードアウト
+        fade.FadeOut(duration);
     }
 
     void OnTriggerExit(Collider other)
