@@ -37,7 +37,7 @@ public class PlayerJumpManager : MonoBehaviour
         _inputActions.Player.Jump.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
-        JumpAsync(_jumpCTS.Token).Forget();
+        //JumpAsync(_jumpCTS.Token).Forget();
     }
     
     void OnEnable()
