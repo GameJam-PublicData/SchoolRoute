@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 395775621899451784}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,10 @@ PrefabInstance:
     - target: {fileID: 3998962615112288191, guid: ce9ff7cd94a664385a261b722ad1aff0, type: 3}
       propertyPath: m_Name
       value: WallCross
+      objectReference: {fileID: 0}
+    - target: {fileID: 3998962615112288191, guid: ce9ff7cd94a664385a261b722ad1aff0, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4338369293531323653, guid: ce9ff7cd94a664385a261b722ad1aff0, type: 3}
       propertyPath: m_LocalScale.x
@@ -122,6 +126,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallBlock (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 990719302355053192, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -195,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_Name
       value: WallBlock (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 990719302355053192, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_LocalScale.x
@@ -270,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallBlock (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 990719302355053192, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -343,6 +359,10 @@ PrefabInstance:
     - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_Name
       value: WallBlock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 501145684381970482, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 990719302355053192, guid: 91dc67d0a35d248a5837e6d96daa4bc4, type: 3}
       propertyPath: m_LocalScale.x
