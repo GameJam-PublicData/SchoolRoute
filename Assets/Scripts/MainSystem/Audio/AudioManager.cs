@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     AudioSource CreateAudioSource(string mixerGroup, bool loop)
     {
         var source = gameObject.AddComponent<AudioSource>();
-        source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(mixerGroup)[0];
+        //source.outputAudioMixerGroup = audioMixer.FindMatchingGroups(mixerGroup)[0];
         source.loop = loop;
         source.spatialBlend = 0f; // 2D
         return source;
