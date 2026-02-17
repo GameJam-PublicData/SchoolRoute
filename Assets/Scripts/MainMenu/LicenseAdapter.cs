@@ -14,6 +14,7 @@ public class LicenseAdapter : MonoBehaviour
     [SerializeField] float moveSpeed = 1500f;
     [SerializeField] float upperMargin = 400f;
     [SerializeField] float bottomMargin = 0f;
+    //拝見中
 
     InputActions _inputActions;
     
