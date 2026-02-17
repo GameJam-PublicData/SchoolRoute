@@ -16,8 +16,8 @@ MonoBehaviour:
   - GravityDirection: 4
     ForwardDirection: 3
     targetPosition: {x: 22.4, y: 0, z: 0}
-    MoveSpeed: 5
+    MoveSpeed: 3
   - GravityDirection: 2
     ForwardDirection: 4
     targetPosition: {x: 22.4, y: 0, z: 50}
-    MoveSpeed: 5
+    MoveSpeed: 3
