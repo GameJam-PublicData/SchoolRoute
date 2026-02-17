@@ -39,6 +39,12 @@ public class PlayerJumpManager : MonoBehaviour
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
         //JumpAsync(_jumpCTS.Token).Forget();
     }
+    public void Jump(float force)
+    {
+        _isJumping = true;
+        Debug.Log("Jump performed!!!!!");
+        _currentJumpForce = force;
+    }
     
     void OnEnable()
     {
@@ -66,7 +72,7 @@ public class PlayerJumpManager : MonoBehaviour
     }
     
     
-    async UniTask JumpAsync(CancellationToken token)
+    public async UniTask JumpAsync(CancellationToken token)
     {
         while (!token.IsCancellationRequested )
         {
