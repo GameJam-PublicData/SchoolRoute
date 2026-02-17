@@ -7,14 +7,15 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     [SerializeField] Sprite[] animationSprites;
-    [SerializeField] private float animationInterval = 100/60f;
+    [SerializeField] private float animationInterval = 5/60f;
     
     private SpriteRenderer _enemySpriteRenderer;
 
-    void Start()
+    void Awake()
     {
         //親のスプライトレンダラーを取得
         _enemySpriteRenderer = GetComponentInParent<SpriteRenderer>();
+        Debug.Log(_enemySpriteRenderer);
     }
 
     public async UniTask Animate()
