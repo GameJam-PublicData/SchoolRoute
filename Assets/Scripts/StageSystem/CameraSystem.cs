@@ -29,15 +29,15 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     {
         Vector3 targetDir = direction switch
         {
-            Direction.Up       => Vector3.down,
-            Direction.Left     => Vector3.right,
-            Direction.Right    => Vector3.left,
-            Direction.Forward  => Vector3.back,
-            Direction.Backward => Vector3.forward,
+            Direction.Up       => Vector3.up,
+            Direction.Left     => Vector3.left,
+            Direction.Right    => Vector3.right,
+            Direction.Forward  => Vector3.forward,
+            Direction.Backward => Vector3.back,
             _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported direction.")
         };
         
-        Vector3 targetPos = _rootObject.position - targetDir * distance;
+        Vector3 targetPos = _rootObject.position - targetDir *  distance;
         Quaternion targetRot = Quaternion.LookRotation(_rootObject.position - targetPos);
     
         // カメラの位置と回転を移動
