@@ -1,12 +1,23 @@
 using MainSystem.Audio;
+using MainSystem.UI;
 using UnityEngine;
+using VContainer;
 
 namespace StageSystem.Player
 {
 public class PlayerHPManager : MonoBehaviour
 {
+    IPlayerLifeUI _playerLifeUI;
+    
     [SerializeField] float MaxHP = 5f;
     float _currentHP;
+    
+    [Inject]
+    void Construct(IPlayerLifeUI playerLifeUI)
+    {
+        _playerLifeUI = playerLifeUI;
+        _playerLifeUI.SetMaxHP(MaxHP);
+    }
     
     /// <summary>
     /// 敵からダメージを与える用の関数
@@ -16,6 +27,7 @@ public class PlayerHPManager : MonoBehaviour
     public bool TakeDamage(float damage)
     {
         _currentHP -= damage;
+        _playerLifeUI.UpdateLifeUI(_currentHP);
         AudioManager.Instance.PlaySE("PlayerDamageSE");
         
         if (_currentHP <= 0){
