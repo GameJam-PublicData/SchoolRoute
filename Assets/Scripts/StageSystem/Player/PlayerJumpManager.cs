@@ -17,9 +17,9 @@ public class PlayerJumpManager : MonoBehaviour
     InputActions _inputActions;
     IReadOnlyGravitySystem _gravitySystem;
     CancellationTokenSource _jumpCTS;
-    bool _isJumping = false;
-    int _groundCount;
-    
+    bool _isJumping = true;
+    [SerializeField]int _groundCount;
+
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
     {
@@ -27,7 +27,6 @@ public class PlayerJumpManager : MonoBehaviour
     }
 
     [SerializeField] float jumpForce = 15f; // ジャンプの力
-    [SerializeField] float jumpMaxTime = 1f;
     
     float _currentJumpForce;
     bool _isJumpButtonPressed;
@@ -48,6 +47,7 @@ public class PlayerJumpManager : MonoBehaviour
     
     void OnJumpEnabled(InputAction.CallbackContext context)
     {
+        Debug.Log("JumpInput");
         if (_isJumping == true) return;
         if(_groundCount <= 0) return;
         _jumpCTS?.Cancel();
@@ -55,7 +55,6 @@ public class PlayerJumpManager : MonoBehaviour
         _isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
-        UniTask.Delay(TimeSpan.FromSeconds(jumpMaxTime), cancellationToken: _jumpCTS.Token).ContinueWith( () => _isJumpButtonPressed = false);
         JumpAsync(_jumpCTS.Token).Forget();
 
          
@@ -63,39 +62,40 @@ public class PlayerJumpManager : MonoBehaviour
     void OnJumpCanceled(InputAction.CallbackContext context)
     {
         _isJumpButtonPressed = false;
-        if(_currentJumpForce > 1)
+        if(_currentJumpForce > 0)
         {
-            //_currentJumpForce = 0;
-            //_currentJumpForce = (int)(_currentJumpForce * 0.7f);
+            _currentJumpForce = (int)(_currentJumpForce * 0.5f);
         }
-        if (_isJumping == false) return;
     }
     
     async UniTask JumpAsync(CancellationToken token)
     {
         _currentJumpForce = jumpForce;
-        int timeElapsed = 0;
         while (!token.IsCancellationRequested && _isJumping)
         {
-            if (_isJumpButtonPressed == false)
+            if(!_isJumpButtonPressed)
             {
-                _currentJumpForce -= jumpForce/3f;
+                _currentJumpForce -= jumpForce/3.5f;
             }
             else
             {
-                float newJumpForce = jumpForce * (1 - timeElapsed / (jumpMaxTime * 1000));
-
-                _currentJumpForce = newJumpForce;
-                
+                _currentJumpForce -= jumpForce/8;
             }
+            if(_currentJumpForce < 0)
+            {
+                _isJumpButtonPressed = false;
+            }
+
             await UniTask.Delay(100, cancellationToken: token);
-            timeElapsed += 100;
         }
     }
 
     void Update()
     {
-        transform.localPosition += Vector3.up * (_currentJumpForce * Time.deltaTime);
+        if(_isJumping == false) return;
+        Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
+        vec *= -1;// 重力の反対方向に移動
+        transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
     }
 
 
@@ -106,7 +106,7 @@ public class PlayerJumpManager : MonoBehaviour
             _groundCount++;
             _isJumping = false;
             _currentJumpForce = 0;
-            Debug.Log("Jump performed!");
+            Debug.Log("Now Grounded!");
             transform.DOKill();
         }
     }
@@ -115,6 +115,7 @@ public class PlayerJumpManager : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Ground"))
         {
+            Debug.Log("Now Jumping!");
             _groundCount--;
             if(_groundCount <= 0)
             {
