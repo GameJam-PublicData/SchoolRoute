@@ -2023,6 +2023,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8224100203565895079, guid: 3e60de93d8fd44e7ca62e72f52bb3fc9, type: 3}
   m_PrefabInstance: {fileID: 33128256}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1592825499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592825501}
+  - component: {fileID: 1592825500}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1592825500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592825499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593beb1a46c04a40a9e024466bc9b50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainSystem.Audio.AudioManager
+  audioMixer: {fileID: 24100000, guid: c3144a4e031844130a828f466667631d, type: 2}
+  audioSO: {fileID: 11400000, guid: 2799c087c8ee94a829ffc563b9a6bd62, type: 2}
+--- !u!4 &1592825501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592825499}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1640436407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3389,3 +3435,4 @@ SceneRoots:
   - {fileID: 182124243}
   - {fileID: 416166426}
   - {fileID: 1675735203}
+  - {fileID: 1592825501}
