@@ -57,7 +57,7 @@ public class PlayerMover : MonoBehaviour
         UniTask.Delay(TimeSpan.FromSeconds(jumpTime)).ContinueWith(() =>
         {
             if (isStart) return;
-            cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition);
+            cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition, _currentRouteData.LookZRotation);
         }).Forget();
         //スピード更新
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;

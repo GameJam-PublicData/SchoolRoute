@@ -6,7 +6,7 @@ namespace StageSystem
 {
 public interface ICameraSystem
 {
-    public void SetRotation(Vector3 targetDir,Vector3 localPos);
+    public void SetRotation(Vector3 targetDir,Vector3 localPos,float lookZ);
 }
 
 public class CameraSystem : MonoBehaviour, ICameraSystem
@@ -24,9 +24,11 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     }
 
     Vector3 _targetDir = Vector3.zero;
-    public void SetRotation(Vector3 targetDir, Vector3 localPos)
+    float _lookZRotation = 0f;
+    public void SetRotation(Vector3 targetDir, Vector3 localPos,float lookZ)
     {
         _targetDir = targetDir;
+        _lookZRotation = lookZ;
         
         transform.DOLocalMove(localPos, rotationSpeed).SetEase(easeType);
         
@@ -47,7 +49,10 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     void Update()
     {
         _rootObject.rotation = Quaternion.identity;
-        transform.LookAt(_rootObject.transform.position + _targetDir);
+        
+        transform.rotation = Quaternion.LookRotation(_rootObject.transform.position + _targetDir);
+        transform.Rotate(new (0,0,_lookZRotation));
+        //transform.LookAt(_rootObject.transform.position + _targetDir);
 
        
     }
