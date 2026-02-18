@@ -31,12 +31,12 @@ public class PlayerAnimationController : MonoBehaviour ,IPlayerAnimationControll
 
     public void PlayerDamaged()
     {
-        Debug.LogError("PlayerDamaged animation not implemented yet!");
+        animator.Play("Damage");
     }
 
     public void PlayerDeath()
     {
-        Debug.LogError("PlayerDeath animation not implemented yet!");
+        animator.Play("Dead");
     }
 
     void Start()
