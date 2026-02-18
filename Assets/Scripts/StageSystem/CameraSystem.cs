@@ -6,7 +6,7 @@ namespace StageSystem
 {
 public interface ICameraSystem
 {
-    public void SetRotation(Direction direction,float rotation,float distance);
+    public void SetRotation(Vector3 targetDir,Vector3 localPos,float lookZ);
 }
 
 public class CameraSystem : MonoBehaviour, ICameraSystem
@@ -16,32 +16,21 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     [Header("カメラの動作")] [SerializeField] float rotationSpeed = 1f;
 
     [Header("DOTWEEN")] [SerializeField] Ease easeType = Ease.InOutSine;
+    
 
     void Awake()
     {
         _rootObject = transform.parent;
     }
-    float _rotation = 0f;
-    Direction _currentDirection;
-    public void SetRotation(Direction direction,float rotation,float distance)
+
+    Vector3 _targetDir = Vector3.zero;
+    float _lookZRotation = 0f;
+    public void SetRotation(Vector3 targetDir, Vector3 localPos,float lookZ)
     {
-        _rotation = 0f;
-        _currentDirection = direction;
-        Debug.Log($"CameraSystem: SetRotation called with direction {direction}");
-        Vector3 targetDir = direction switch
-        {
-            Direction.Up       => Vector3.down,
-            Direction.Down     => Vector3.up,
-            Direction.Left     => Vector3.right,
-            Direction.Right    => Vector3.left,
-            Direction.Forward  => Vector3.back,
-            Direction.Backward => Vector3.forward,
-            _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported direction.")
-        };
-
-        Vector3 targetPos = targetDir * (-1 * distance);
-
-        transform.DOLocalMove(targetPos, rotationSpeed).SetEase(easeType);
+        _targetDir = targetDir;
+        _lookZRotation = lookZ;
+        
+        transform.DOLocalMove(localPos, rotationSpeed).SetEase(easeType);
         
         /*
         DOTween.To(() => _rotation,
@@ -60,23 +49,10 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     void Update()
     {
         _rootObject.rotation = Quaternion.identity;
-        transform.LookAt(_rootObject);
-        switch (_currentDirection)
-        {
-            case Direction.Up:
-            case Direction.Down:
-                transform.Rotate(0, 0,_rotation);
-                break;
-            case Direction.Left:
-            case Direction.Right:
-                transform.Rotate(0,_rotation,0);
-                break;
-            case Direction.Forward:
-            case Direction.Backward:
-                transform.Rotate(0,_rotation,0);
-                break;
-        }
-        //transform.Rotate(0, _rotation, 0);
+        
+        transform.rotation = Quaternion.LookRotation(_rootObject.transform.position + _targetDir);
+        transform.Rotate(new (0,0,_lookZRotation));
+        //transform.LookAt(_rootObject.transform.position + _targetDir);
 
        
     }
