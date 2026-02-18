@@ -182,6 +182,7 @@ public class PlayerJumpManager : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Ground"))
         {
+      
             _groundCount--;
             if(_groundCount <= 0)
             {
