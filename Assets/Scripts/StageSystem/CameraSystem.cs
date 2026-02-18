@@ -32,8 +32,8 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
         {
             Direction.Up       => Vector3.down,
             Direction.Down     => Vector3.up,
-            Direction.Left     => Vector3.right,
-            Direction.Right    => Vector3.left,
+            Direction.Left     => Vector3.left,
+            Direction.Right    => Vector3.right,
             Direction.Forward  => Vector3.back,
             Direction.Backward => Vector3.forward,
             _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unsupported direction.")
