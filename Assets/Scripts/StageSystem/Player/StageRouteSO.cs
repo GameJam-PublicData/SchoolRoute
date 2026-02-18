@@ -26,9 +26,8 @@ public class StageRouteData
     public Vector3 CameraTargetLocalPosition = Vector3.zero;
     public Vector3 CameraLocalPosition = new Vector3(0,0,-3);
     
-    public float CameraRotation;
-    public float CameraDistance;
-
+ 
+    
     public float MoveTime = 3;
 
 }
