@@ -15,7 +15,6 @@ public class EnemyAnimation : MonoBehaviour
     {
         //親のスプライトレンダラーを取得
         _enemySpriteRenderer = GetComponentInParent<SpriteRenderer>();
-        Debug.Log(_enemySpriteRenderer);
     }
 
     public async UniTask Animate()

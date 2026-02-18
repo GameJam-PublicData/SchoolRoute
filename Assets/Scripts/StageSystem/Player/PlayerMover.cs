@@ -58,6 +58,7 @@ public class PlayerMover : MonoBehaviour
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
         if (isStart)
         {
+            _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
             _currentRouteIndex++;
             return;
         }
