@@ -23,9 +23,11 @@ public class StageRouteData
     public Vector3 TargetPosition => targetPosition;
     [SerializeField] Vector3 jumpTargetPosition = Vector3.zero;
     public Vector3 JumpTargetPosition => jumpTargetPosition;
-    public float CameraRotation;
-    public float CameraDistance;
-
+    public Vector3 CameraTargetLocalPosition = Vector3.zero;
+    public Vector3 CameraLocalPosition = new Vector3(0,0,-3);
+    
+ 
+    
     public float MoveTime = 3;
 
 }
