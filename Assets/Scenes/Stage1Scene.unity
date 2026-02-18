@@ -1556,6 +1556,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1112997559791053512, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
+      propertyPath: rotationSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1419773100706497126, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
       propertyPath: jumpTime
       value: 1
@@ -1566,7 +1570,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 945008f8b36204b9b9ac9e91b4acc722, type: 2}
     - target: {fileID: 1419773100706497126, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
       propertyPath: gravityJumpForce
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1926126571490914012, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1618,7 +1622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5919175887224998943, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
       propertyPath: jumpForce
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5919175887224998943, guid: c1a32ad62920a49a590efade09e2ae25, type: 3}
       propertyPath: m_Enabled
