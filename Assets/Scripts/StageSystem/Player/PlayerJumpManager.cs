@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -16,7 +17,7 @@ public class PlayerJumpManager : MonoBehaviour
 {
     InputActions _inputActions;
     IReadOnlyGravitySystem _gravitySystem;
-    CancellationTokenSource _jumpCTS;
+    CancellationTokenSource _jumpCTS = new();
     bool _isJumping = true;
     int _groundCount;
 
@@ -37,6 +38,39 @@ public class PlayerJumpManager : MonoBehaviour
         _inputActions.Player.Jump.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
+        JumpAsync(_jumpCTS.Token).Forget();
+    }
+    public void Jump(float force,Direction direction)
+    {
+        _isJumping = true;
+        Debug.Log("Jump performed!!!!!");
+        _currentJumpForce = force;
+
+        /*
+        switch (direction)
+        {
+            case Direction.Up:
+            case Direction.Down:
+            {
+                transform.DOLocalMoveY(0, 0.3f);
+                transform.DOLocalMoveX(0, 0.3f);
+                break;
+            }
+            case Direction.Backward:
+            case Direction.Forward:
+            {
+                transform.DOLocalMoveY(0, 0.3f);
+                transform.DOLocalMoveZ(0, 0.3f);
+                break;
+            }
+            case Direction.Left:
+            case Direction.Right:
+            { 
+                transform.DOLocalMoveY(0, 0.3f);
+                transform.DOLocalMoveX(0, 0.3f);
+                break;
+            }
+        }*/
         
     }
     
@@ -50,15 +84,12 @@ public class PlayerJumpManager : MonoBehaviour
         Debug.Log("JumpInput");
         if (_isJumping == true) return;
         if(_groundCount <= 0) return;
-        _jumpCTS?.Cancel();
-        _jumpCTS = new CancellationTokenSource();
         _isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
-        JumpAsync(_jumpCTS.Token).Forget();
-
-         
+        _currentJumpForce = jumpForce;
     }
+    
     void OnJumpCanceled(InputAction.CallbackContext context)
     {
         _isJumpButtonPressed = false;
@@ -68,11 +99,13 @@ public class PlayerJumpManager : MonoBehaviour
         }
     }
     
+    
     async UniTask JumpAsync(CancellationToken token)
     {
-        _currentJumpForce = jumpForce;
-        while (!token.IsCancellationRequested && _isJumping)
+        while (!token.IsCancellationRequested )
         {
+            await UniTask.Delay(100, cancellationToken: token);
+            if( _isJumping == false) continue;
             if(!_isJumpButtonPressed)
             {
                 _currentJumpForce -= jumpForce/3.5f;
@@ -85,20 +118,54 @@ public class PlayerJumpManager : MonoBehaviour
             {
                 _isJumpButtonPressed = false;
             }
-
-            await UniTask.Delay(100, cancellationToken: token);
         }
     }
 
     void Update()
     {
+        transform.localRotation = Quaternion.Euler(_gravityRotationMap[_gravitySystem.GetGravityDirection()]);
         if(_isJumping == false) return;
+        
         Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
         vec *= -1;// 重力の反対方向に移動
+        
         transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
     }
 
+    Dictionary<Direction, Vector3> _gravityRotationMap = new Dictionary<Direction, Vector3>()
+    {
+        { Direction.Forward, new Vector3(-90, 0, 0) },
+        { Direction.Backward, new Vector3(90, 0, 0) },
+        { Direction.Left, new Vector3(0, 0, -90) },
+        { Direction.Right, new Vector3(0, 0, 90) },
+        { Direction.Down, Vector3.zero },
+        { Direction.Up, new Vector3(0, 0, 180) }
+    };
 
+        
+        
+
+    Vector3 GetGravityVector()
+    {
+        switch (_gravitySystem.GetGravityDirection())
+        {
+            case Direction.Up:
+                return Vector3.up * _currentJumpForce;
+            case Direction.Down:
+                return Vector3.down * _currentJumpForce;
+            case Direction.Left:
+                return Vector3.left * _currentJumpForce;
+            case Direction.Right:
+                return Vector3.right * _currentJumpForce;
+            case Direction.Forward:
+                return Vector3.forward * _currentJumpForce;
+            case Direction.Backward:
+                return Vector3.back * _currentJumpForce;
+            default:
+                return Vector3.zero;
+        }
+    }
+    
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Ground"))

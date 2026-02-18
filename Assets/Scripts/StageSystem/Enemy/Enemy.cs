@@ -1,4 +1,5 @@
 using System;
+using MainSystem.Audio;
 using StageSystem.Enemy;
 using StageSystem.Player;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class Enemy : MonoBehaviour,IEnemy
     /// <param name="damage">ダメージ量</param>
     public void TakeDamage(float damage)
     {
+        AudioManager.Instance.PlaySE("EnemyDamageSE");
+        
         Destroy(gameObject);
     }
 

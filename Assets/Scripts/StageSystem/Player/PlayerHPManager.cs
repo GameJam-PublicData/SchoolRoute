@@ -1,3 +1,4 @@
+using MainSystem.Audio;
 using UnityEngine;
 
 namespace StageSystem.Player
@@ -15,6 +16,8 @@ public class PlayerHPManager : MonoBehaviour
     public bool TakeDamage(float damage)
     {
         _currentHP -= damage;
+        AudioManager.Instance.PlaySE("PlayerDamageSE");
+        
         if (_currentHP <= 0){
             _currentHP = 0;
             return true; // プレイヤーが死んだことを示す
