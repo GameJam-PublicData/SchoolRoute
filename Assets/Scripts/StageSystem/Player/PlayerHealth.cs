@@ -17,17 +17,21 @@ public class PlayerHealth : MonoBehaviour
     
     [Inject]
     void Init(IFade fade, ICountdownManager countdown)
-    {
-        // Player関連は時オブジェクトから取得
-        _hpManager = GetComponent<PlayerHPManager>();
-        _mover = GetComponent<PlayerMover>();
-        
+    { 
         _fade = fade;
         _countdown = countdown;
     }
-    
-    async void OnTriggerExit(Collider other)
+
+    void Start()
     {
+        var parentObj = transform.parent.gameObject;
+        _hpManager = parentObj.GetComponent<PlayerHPManager>();
+        _mover = parentObj.GetComponent<PlayerMover>();
+    }
+
+    async void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("OnTriggerEnter");
         if(other.gameObject.CompareTag("SavePoint"))
         {
             // セーブポイントの更新
@@ -38,16 +42,14 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Entered Death Zone!");
             
             _hpManager.TakeDamage(1f);
-            _mover.ChangeCanMove(false);
+            _mover.canMove = false;
             
             var duration = 1.5f;
             
             // フェードイン・フェードアウトとプレイヤーの移動
             _fade.FadeIn(duration, MoveRespawnPoint);
             await UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5));
-            _fade.FadeOut(duration, () => _countdown.StartCountdown());
-            
-            _mover.ChangeCanMove(true);
+            _fade.FadeOut(duration, () => _countdown.StartCountdown(() => _mover.canMove = true));
         }
     }
 

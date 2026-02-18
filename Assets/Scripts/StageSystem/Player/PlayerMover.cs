@@ -10,7 +10,7 @@ public class PlayerMover : MonoBehaviour
 {
     [SerializeField] StageRouteSO stageRouteSO;
     [SerializeField] float jumpTime = 1f;
-    [SerializeField] bool canMove = true;
+    [SerializeField] public bool canMove = true;
     IGravitySystem _gravitySystem;
     [SerializeField] CameraSystem cameraSystem;
     [SerializeField] float gravityJumpForce = 10f;
@@ -151,8 +151,6 @@ public class PlayerMover : MonoBehaviour
         canMove = true;
         Debug.Log($"Arrived at {data.JumpTargetPosition}");
     }
-
-    public void ChangeCanMove(bool value) => canMove = value;
 }
 }
 

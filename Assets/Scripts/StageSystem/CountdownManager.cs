@@ -9,7 +9,7 @@ public interface ICountdownManager
 {
     void StartCountdown(Action onCompleted = null);
 }
-public class CountdownManager : MonoBehaviour
+public class CountdownManager : MonoBehaviour, ICountdownManager
 {
     [Header("配置")]
     [SerializeField] Vector3 basePosition = new (0, 0, 0);
@@ -23,7 +23,6 @@ public class CountdownManager : MonoBehaviour
         foreach (var step in countdownSteps)
         {
             await InstanceShowStepObject(step);
-            Destroy(step);
         }
         
         InstanceShowStepObject(goObject, 1.25f).Forget();
@@ -32,8 +31,10 @@ public class CountdownManager : MonoBehaviour
 
     async UniTask InstanceShowStepObject(GameObject step, float showTime = 1f)
     {
-        Instantiate(step, basePosition, transform.rotation);
+        var instance = Instantiate(step, transform);
+        instance.transform.localPosition = basePosition;
         await UniTask.Delay(TimeSpan.FromSeconds(showTime));
+        Destroy(instance);
     }
 }
 }
