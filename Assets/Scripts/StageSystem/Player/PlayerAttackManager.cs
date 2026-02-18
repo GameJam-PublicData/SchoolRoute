@@ -11,7 +11,8 @@ public class PlayerAttackManager : MonoBehaviour
 {
     InputActions _input;
     [SerializeField] GameObject flickRangeObj;
-    [SerializeField] float attackTime = 0.5f;
+    [SerializeField] float attackTime = 0.5f;//クールダウン
+    [SerializeField] PlayerAnimationController playerAnimationController;
     
     bool _isAttacking;
     
@@ -39,8 +40,10 @@ public class PlayerAttackManager : MonoBehaviour
     
     async void OnFlickAsync(InputAction.CallbackContext context)
     {
+        Debug.Log("Attack input detected!");
         if (_isAttacking) return;
         _isAttacking = true;
+        await UniTask.Delay(TimeSpan.FromSeconds(playerAnimationController.PlayerAttack()));
         
         try
         {
