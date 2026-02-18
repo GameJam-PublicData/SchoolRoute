@@ -27,8 +27,10 @@ public class PlayerHPManager : MonoBehaviour
     public bool TakeDamage(float damage)
     {
         _currentHP -= damage;
-        _playerLifeUI.UpdateLifeUI(_currentHP);
         AudioManager.Instance.PlaySE("PlayerDamageSE");
+        
+        // UIの更新
+        _playerLifeUI.UpdateLifeUI(_currentHP);
         
         if (_currentHP <= 0){
             _currentHP = 0;
