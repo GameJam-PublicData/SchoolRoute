@@ -18,8 +18,8 @@ public class PlayerJumpManager : MonoBehaviour
     InputActions _inputActions;
     IReadOnlyGravitySystem _gravitySystem;
     CancellationTokenSource _jumpCTS = new();
-    bool _isJumping = true;
-    int _groundCount;
+    [SerializeField]bool isJumping = true;
+    [SerializeField]int groundCount;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -42,7 +42,7 @@ public class PlayerJumpManager : MonoBehaviour
     }
     public void Jump(float force,Direction direction)
     {
-        _isJumping = true;
+        isJumping = true;
         Debug.Log("Jump performed!!!!!");
         _currentJumpForce = force;
 
@@ -82,9 +82,9 @@ public class PlayerJumpManager : MonoBehaviour
     void OnJumpEnabled(InputAction.CallbackContext context)
     {
         Debug.Log("JumpInput");
-        if (_isJumping == true) return;
-        if(_groundCount <= 0) return;
-        _isJumping = true;
+        if (isJumping == true) return;
+        if(groundCount <= 0) return;
+        isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
         _currentJumpForce = jumpForce;
@@ -105,7 +105,7 @@ public class PlayerJumpManager : MonoBehaviour
         while (!token.IsCancellationRequested )
         {
             await UniTask.Delay(100, cancellationToken: token);
-            if( _isJumping == false) continue;
+            if( isJumping == false) continue;
             if(!_isJumpButtonPressed)
             {
                 _currentJumpForce -= jumpForce/3.5f;
@@ -124,7 +124,7 @@ public class PlayerJumpManager : MonoBehaviour
     void Update()
     {
         transform.localRotation = Quaternion.Euler(_gravityRotationMap[_gravitySystem.GetGravityDirection()]);
-        if(_isJumping == false) return;
+        if(isJumping == false) return;
         
         Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
         vec *= -1;// 重力の反対方向に移動
@@ -170,8 +170,8 @@ public class PlayerJumpManager : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Ground"))
         {
-            _groundCount++;
-            _isJumping = false;
+            groundCount++;
+            isJumping = false;
             _currentJumpForce = 0;
             Debug.Log("Now Grounded!");
             transform.DOKill();
@@ -183,10 +183,10 @@ public class PlayerJumpManager : MonoBehaviour
         if(other.gameObject.CompareTag("Ground"))
         {
       
-            _groundCount--;
-            if(_groundCount <= 0)
+            groundCount--;
+            if(groundCount <= 0)
             {
-                _isJumping = true;
+                isJumping = true;
             }
         }
     }
