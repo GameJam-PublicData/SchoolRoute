@@ -24,9 +24,11 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        var parentObj = transform.parent.gameObject;
-        _hpManager = parentObj.GetComponent<PlayerHPManager>();
-        _mover = parentObj.GetComponent<PlayerMover>();
+        var grandParent = transform.parent.parent.gameObject;
+
+        
+        _hpManager = grandParent.GetComponent<PlayerHPManager>();
+        _mover = grandParent.GetComponent<PlayerMover>();
     }
 
     async void OnTriggerEnter(Collider other)
