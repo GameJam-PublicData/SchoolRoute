@@ -31,7 +31,7 @@ public class PlayerMover : MonoBehaviour
     StageRouteData _currentRouteData;
     int _currentRouteIndex = 0;
     Vector3 _targetPosition;
-    float _currentSpeed = 1;
+    float _currentSpeed = 0.01f;
     
     void Start()
     {
