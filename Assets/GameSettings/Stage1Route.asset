@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: Stage1Route
   m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Player.StageRoute
   routeDataList:
-  - GravityDirection: 4
-    ForwardDirection: 2
-    CameraDirection: 2
-    targetPosition: {x: 22.1, y: 0, z: 0}
-    jumpTargetPosition: {x: 22.5, y: 0, z: 1}
+  - GravityDirection: 5
+    ForwardDirection: 3
+    CameraDirection: 3
+    targetPosition: {x: 0, y: 1, z: 2}
+    jumpTargetPosition: {x: 0, y: 1, z: 2}
     CameraRotation: 30
-    CameraDistance: 10
-    MoveSpeed: 5
+    CameraDistance: 3
+    MoveTime: 1
+  - GravityDirection: 5
+    ForwardDirection: 3
+    CameraDirection: 3
+    targetPosition: {x: -24.4, y: 1, z: 2}
+    jumpTargetPosition: {x: -24.5, y: 1, z: 2}
+    CameraRotation: 30
+    CameraDistance: 3
+    MoveTime: 8
   - GravityDirection: 2
     ForwardDirection: 4
-    CameraDirection: 0
-    targetPosition: {x: 22.5, y: 0, z: 50}
+    CameraDirection: 2
+    targetPosition: {x: -24.4, y: 0, z: 2}
     jumpTargetPosition: {x: 0, y: 0, z: 0}
-    CameraRotation: 90
-    CameraDistance: 30
-    MoveSpeed: 5
+    CameraRotation: 30
+    CameraDistance: 2
+    MoveTime: 8
