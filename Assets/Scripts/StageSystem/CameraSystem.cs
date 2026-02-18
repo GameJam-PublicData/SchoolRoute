@@ -29,7 +29,8 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     {
         _targetDir = targetDir;
         _lookZRotation = lookZ;
-        
+
+        transform.DOKill();
         transform.DOLocalMove(localPos, rotationSpeed).SetEase(easeType);
         
         /*
