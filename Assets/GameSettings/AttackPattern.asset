@@ -10,5 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea0b8da58433942d586ead26b7c09293, type: 3}
-  m_Name: test
+  m_Name: AttackPattern
   m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Boss.BossAttackPattern
+  BossAttackPatternsByHP:
+  - AttackRoutine: 010000000100000000000000
+    AttackInterval:
+    - 2
+    - 2
+    - 2
+  - AttackRoutine: 01000000020000000100000000000000
+    AttackInterval:
+    - 2
+    - 1.5
+    - 2
+    - 2
+  - AttackRoutine: 0100000002000000010000000200000000000000
+    AttackInterval:
+    - 2
+    - 3
+    - 2
+    - 3
+    - 2

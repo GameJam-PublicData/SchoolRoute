@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace StageSystem.Boss
 {
@@ -19,6 +21,7 @@ public class BossManager : MonoBehaviour,IBoss
     void Awake()
     {
         _attackBehavior = GetComponent<BossAttackBehavior>();
+        BossStart();
     }
 
     public int HP { get; set; } = 3;
@@ -48,6 +51,9 @@ public class BossManager : MonoBehaviour,IBoss
                     break;
                 case BossAttackType.AttendanceRecordShot:
                     _attackBehavior.AttendanceRecordShot();
+                    break;
+                case BossAttackType.AttendanceRecordAndChockShot:
+                    _attackBehavior.StartCoroutine(_attackBehavior.AttendanceRecordAndChockShot());
                     break;
             }
 
@@ -79,7 +85,11 @@ public class BossManager : MonoBehaviour,IBoss
 
     void Death()
     {
+        transform.DOMove(new Vector3(10,10, 0), 1f).OnComplete(() => Destroy(gameObject));
         
+        transform.DOLocalRotate(new Vector3(Random.Range(-1080, 1080), Random.Range(-1080, 1080), Random.Range(-1080, 1080)), 0.1f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear);
     }
 }
 }

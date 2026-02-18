@@ -27,7 +27,12 @@ public enum BossAttackType
     /// <summary>
     /// 出席簿投げ
     /// </summary>
-    AttendanceRecordShot
+    AttendanceRecordShot,
+    
+    /// <summary>
+    /// 出席簿とチョーク投げ
+    /// </summary>
+    AttendanceRecordAndChockShot
 }
 
 [System.Serializable]
