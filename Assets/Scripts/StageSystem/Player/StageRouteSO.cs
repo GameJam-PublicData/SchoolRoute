@@ -17,15 +17,13 @@ public class StageRouteData
     [Header("全てワールド軸でForwardがZ軸の正方向になるように設定すること")]
     public Direction GravityDirection;
     public Direction ForwardDirection;
-    [Header("プレイヤーをどっち側から見るか")]
-    public Direction CameraDirection;
     [SerializeField]Vector3 targetPosition;
     public Vector3 TargetPosition => targetPosition;
     [SerializeField] Vector3 jumpTargetPosition = Vector3.zero;
     public Vector3 JumpTargetPosition => jumpTargetPosition;
     public Vector3 CameraTargetLocalPosition = Vector3.zero;
     public Vector3 CameraLocalPosition = new Vector3(0,0,-3);
-    
+    public float LookZRotation = 0;
  
     
     public float MoveTime = 3;
