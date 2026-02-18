@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InputSystemActions;
+using StageSystem.Result;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -156,6 +157,11 @@ public class PlayerJumpManager : MonoBehaviour
             _currentJumpForce = 0;
             Debug.Log("Now Grounded!");
             transform.DOKill();
+        }
+
+        if (other.gameObject.CompareTag("ClaerArea"))
+        {
+            ResultManager.Instance.Clear();
         }
     }
 
