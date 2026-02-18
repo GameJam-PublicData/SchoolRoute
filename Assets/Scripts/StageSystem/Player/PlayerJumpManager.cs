@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InputSystemActions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -35,7 +36,7 @@ public class PlayerJumpManager : MonoBehaviour
     void Awake()
     {
         _inputActions = new InputActions();
-        _inputActions.Player.Jump.Enable();
+        _inputActions.Player.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
         JumpAsync(_jumpCTS.Token).Forget();
@@ -124,6 +125,9 @@ public class PlayerJumpManager : MonoBehaviour
     void Update()
     {
         transform.localRotation = Quaternion.Euler(_gravityRotationMap[_gravitySystem.GetGravityDirection()]);
+        
+        
+        
         if(isJumping == false) return;
         
         Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
@@ -142,30 +146,7 @@ public class PlayerJumpManager : MonoBehaviour
         { Direction.Up, new Vector3(0, 0, 180) }
     };
 
-        
-        
 
-    Vector3 GetGravityVector()
-    {
-        switch (_gravitySystem.GetGravityDirection())
-        {
-            case Direction.Up:
-                return Vector3.up * _currentJumpForce;
-            case Direction.Down:
-                return Vector3.down * _currentJumpForce;
-            case Direction.Left:
-                return Vector3.left * _currentJumpForce;
-            case Direction.Right:
-                return Vector3.right * _currentJumpForce;
-            case Direction.Forward:
-                return Vector3.forward * _currentJumpForce;
-            case Direction.Backward:
-                return Vector3.back * _currentJumpForce;
-            default:
-                return Vector3.zero;
-        }
-    }
-    
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Ground"))
@@ -190,14 +171,16 @@ public class PlayerJumpManager : MonoBehaviour
             }
         }
     }
-    
 
+
+
+    
 
     void OnDisable()
     {
         _inputActions.Player.Jump.started -= OnJumpEnabled;
         _inputActions.Player.Jump.canceled -= OnJumpCanceled;
-        _inputActions.Player.Jump.Disable();
+        _inputActions.Player.Disable();
     }
 } 
 }
