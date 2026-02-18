@@ -11,6 +11,7 @@ public class PlayerHPManager : MonoBehaviour
     
     [SerializeField] float MaxHP = 5f;
     float _currentHP;
+    [SerializeField] PlayerAnimationController playerAnimationController;
     
     [Inject]
     void Construct(IPlayerLifeUI playerLifeUI)
@@ -28,14 +29,15 @@ public class PlayerHPManager : MonoBehaviour
     {
         _currentHP -= damage;
         AudioManager.Instance.PlaySE("PlayerDamageSE");
+        playerAnimationController .PlayerDamaged();
         
         // UIの更新
         _playerLifeUI.UpdateLifeUI(_currentHP);
         
         if (_currentHP <= 0){
             _currentHP = 0;
-            return true; // プレイヤーが死んだことを示す
             Death();
+            return true; // プレイヤーが死んだことを示す
         }
         
         return false; // まだ生きていることを示す
@@ -46,7 +48,7 @@ public class PlayerHPManager : MonoBehaviour
     /// </summary>
     void Death()
     {
-        
+        Debug.LogError("Player has died! Implement death behavior here.");
     }
 }
 }

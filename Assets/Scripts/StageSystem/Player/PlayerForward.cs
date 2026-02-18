@@ -6,11 +6,12 @@ namespace StageSystem.Player
 public class PlayerForward : MonoBehaviour
 {
     public Direction forwardDirection = Direction.Forward;
+    public float HandAngle = 45f;
 
     public void ChangeForwardDirection(Direction newDirection,float fadeTime = 0.5f)
     {
         forwardDirection = newDirection;
-        transform.DOLocalRotate(Quaternion.LookRotation(GetForwardVector(), Vector3.up).eulerAngles +new Vector3(0,0,180),fadeTime);
+        transform.DOLocalRotate(Quaternion.LookRotation(GetForwardVector(), Vector3.up).eulerAngles +new Vector3(HandAngle,0,180),fadeTime);
     }
 
     Vector3 GetForwardVector()
