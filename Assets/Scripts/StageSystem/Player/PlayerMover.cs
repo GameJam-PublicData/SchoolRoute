@@ -58,7 +58,9 @@ public class PlayerMover : MonoBehaviour
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
         if (isStart)
         {
+            _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
             _currentRouteIndex++;
+            _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
             return;
         }
         
@@ -67,12 +69,13 @@ public class PlayerMover : MonoBehaviour
         if (oldData.JumpTargetPosition != Vector3.zero &&
             oldData.GravityDirection != _currentRouteData.GravityDirection) JumpToPosition(oldData).Forget();
         else if (oldData.JumpTargetPosition != Vector3.zero) Jump(oldData).Forget();
-        else if (oldData.GravityDirection != _currentRouteData.GravityDirection)
+        else if ( oldData.GravityDirection != _currentRouteData.GravityDirection)
         {
             Debug.LogWarning("GravityChangeJump");
             _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
             GetComponentInChildren<PlayerJumpManager>().Jump(gravityJumpForce ,_currentRouteData.GravityDirection);
         }
+        
         
         _currentRouteIndex++;
        
