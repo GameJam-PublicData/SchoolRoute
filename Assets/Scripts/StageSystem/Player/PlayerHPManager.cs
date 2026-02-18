@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using MainSystem.Audio;
 using MainSystem.UI;
 using UnityEngine;
@@ -10,8 +11,14 @@ public class PlayerHPManager : MonoBehaviour
     IPlayerLifeUI _playerLifeUI;
     
     [SerializeField] float MaxHP = 5f;
-    float _currentHP;
+    [SerializeField]float _currentHP;
     [SerializeField] PlayerAnimationController playerAnimationController;
+
+    void Start()
+    {
+        _currentHP = MaxHP;
+    }
+
     
     [Inject]
     void Construct(IPlayerLifeUI playerLifeUI)
@@ -27,6 +34,11 @@ public class PlayerHPManager : MonoBehaviour
     /// <returns>その結果死んだかどうか</returns>
     public bool TakeDamage(float damage)
     {
+        if(!_canDamaged)
+        {  
+            Debug .Log("Player is invincible and cannot take damage right now.");
+            return false; // 無敵状態ならダメージを受けない
+        }
         _currentHP -= damage;
         AudioManager.Instance.PlaySE("PlayerDamageSE");
         playerAnimationController .PlayerDamaged();
@@ -41,6 +53,15 @@ public class PlayerHPManager : MonoBehaviour
         }
         
         return false; // まだ生きていることを示す
+    }
+    
+    [SerializeField] float interval = 1f;//ダメージを受けてから次にダメージを受けるまでの無敵時間
+    bool _canDamaged = true;//ダメージを受けられるかどうか
+    async UniTask DamageInterval( )
+    {
+        _canDamaged = false;
+        await UniTask.Delay(System.TimeSpan.FromSeconds(interval));
+        _canDamaged = true;
     }
 
     /// <summary>
