@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MainSystem.UI
 {
@@ -9,30 +8,33 @@ public interface IPlayerLifeUI
     void SetMaxHP(float maxHP);
     void UpdateLifeUI(float currentHP);
 }
+public enum LifeState
+{
+    Full,
+    Empty
+}
 public struct HeartData
 {
-    Image _heartImage;
-    LifeStateSO _lifeStateSO;
+    GameObject _heartObj;
+    LifeState _heartState;
     
-    public HeartData(Image image, LifeStateSO initialState)
+    public HeartData(GameObject heartObj, LifeState lifeState)
     {
-        _heartImage = image;
-        _lifeStateSO = initialState;
-        _heartImage.sprite = initialState._stateSprite;
+        _heartObj = heartObj;
+        _heartState = lifeState;
     }
     
-    public void ChangeState(LifeStateSO lifeStateSO)
+    public void ChangeState(LifeState lifeState)
     {
-        _lifeStateSO = lifeStateSO;
-        _heartImage.sprite = _lifeStateSO._stateSprite;
+        _heartState = lifeState;
+        // ※注意: 子オブジェクトにあるColorという名のオブジェクトを無理やり探すハードコーディングで実装してます
+        _heartObj.transform.Find("Color").gameObject.SetActive(_heartState == LifeState.Full);
     }
 }
 public class PlayerLifeUI : MonoBehaviour, IPlayerLifeUI
 {
     [Header("データ")]
     [SerializeField] GameObject _heartPrefab;
-    [SerializeField] LifeStateSO _fullHeartSO;
-    [SerializeField] LifeStateSO _emptyHeartSO;
     
     [Header("配置")]
     [SerializeField] Vector3 _heartStartPosition = new (-850, 425, 0);
@@ -54,14 +56,12 @@ public class PlayerLifeUI : MonoBehaviour, IPlayerLifeUI
             var heartObj = Instantiate(_heartPrefab, transform);
             
             var rectTransform = heartObj.GetComponent<RectTransform>();
-            var heartImage = heartObj.GetComponent<Image>();
             
             // ハートの位置とスケールを設定
             rectTransform.anchoredPosition = position;
             rectTransform.localScale = Vector3.one * _heartScale;
-            
-            var heartData = new HeartData(heartImage, _emptyHeartSO);
-            heartData.ChangeState(_fullHeartSO);
+
+            var heartData = new HeartData(heartObj, LifeState.Full);
             
             _heartDataList.Add(heartData);
         }
@@ -69,10 +69,10 @@ public class PlayerLifeUI : MonoBehaviour, IPlayerLifeUI
 
     public void UpdateLifeUI(float currentHP)
     {
-        _currentHP = currentHP; 
+        _currentHP = currentHP;
         for (int i = 0; i < _heartDataList.Count; i++)
         {
-            _heartDataList[i].ChangeState(i < _currentHP ? _fullHeartSO : _emptyHeartSO);
+            _heartDataList[i].ChangeState(i < _currentHP ? LifeState.Full : LifeState.Empty);
         }
     }
 }
