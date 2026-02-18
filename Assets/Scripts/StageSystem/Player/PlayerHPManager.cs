@@ -19,7 +19,7 @@ public class PlayerHPManager : MonoBehaviour
     {
         _currentHP = MaxHP;
         
-        AudioManager.Instance.PlayBGM("StageBGM", 1f);
+        AudioManager.Instance.PlayBGM("StageBGM");
     }
 
     

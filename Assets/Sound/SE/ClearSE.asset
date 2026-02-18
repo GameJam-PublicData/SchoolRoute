@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ClearSE
   m_EditorClassIdentifier: Assembly-CSharp::MainSystem.Audio.SoundData
   category: 2
-  soundName: ButtonSE
-  clip: {fileID: 8300000, guid: b05e25d76936d4a85b8a9be4ea36bd89, type: 3}
+  soundName: ClearSE
+  clip: {fileID: 8300000, guid: 76aaaaecac2274c5b96a7b01df51874e, type: 3}
   volume: 1
   loop: 0

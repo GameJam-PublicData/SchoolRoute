@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LoseSE
   m_EditorClassIdentifier: Assembly-CSharp::MainSystem.Audio.SoundData
   category: 2
-  soundName: ButtonSE
-  clip: {fileID: 8300000, guid: b05e25d76936d4a85b8a9be4ea36bd89, type: 3}
+  soundName: LoseSE
+  clip: {fileID: 8300000, guid: 92049397b87f74480bd38b1b8397f6d6, type: 3}
   volume: 1
   loop: 0

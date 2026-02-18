@@ -32,7 +32,7 @@ public class MainMenuManager : MonoBehaviour
     {
         Init();
         
-        AudioManager.Instance.PlayBGM("MainMenuBGM", 1f);
+        AudioManager.Instance.PlayBGM("MainMenuBGM");
     }
 
     void Init()
