@@ -1,9 +1,9 @@
-using System;
 using MainSystem.Audio;
-using StageSystem.Enemy;
 using StageSystem.Player;
 using UnityEngine;
 
+namespace StageSystem.Enemy
+{
 public class Enemy : MonoBehaviour,IEnemy
 {
     [SerializeField] float damage = 1f;
@@ -19,17 +19,15 @@ public class Enemy : MonoBehaviour,IEnemy
         Destroy(gameObject);
     }
 
-    /// <summary>
-    /// プレイヤーに触れた時の処理
-    /// </summary>
-    /// <param name="collision"></param>
-    void OnCollisionEnter(Collision collision)
+ 
+    void OnTriggerEnter(Collider collision)
     {
-        var player = collision.gameObject.GetComponent<PlayerHPManager>();
+        var player = collision.GetComponentInParent<PlayerHPManager>();
 
         if (player != null)
         { 
             player.TakeDamage(damage);
         }
     }
+}
 }
