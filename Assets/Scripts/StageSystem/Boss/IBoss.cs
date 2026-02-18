@@ -6,6 +6,11 @@ public interface IBoss
         /// ボスのHP
         /// </summary>
         public int HP { get; set; }
+
+        /// <summary>
+        /// これが実行されたらボスが起動する
+        /// </summary>
+        public void BossStart();
         
         /// <summary>
         /// ボスのHPを減らす関数
@@ -13,10 +18,6 @@ public interface IBoss
         /// <param name="damage">減らすHP</param>
         public void TakeDamage(int damage);
         
-        /// <summary>
-        /// ボスの攻撃方法
-        /// </summary>
-        public void Attack();
         
 }
 }
