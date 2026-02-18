@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using MainSystem.Scene;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace StageSystem.Result
@@ -12,6 +13,9 @@ public class ResultManager : MonoBehaviour
     public static ResultManager Instance;
     [SerializeField] RectTransform resultPanel;
     [SerializeField] Button goMainmenuButton;
+
+    [SerializeField] GameObject winIcon;
+    [SerializeField] GameObject loseIcon;
     
     void Awake()
     {
@@ -24,8 +28,6 @@ public class ResultManager : MonoBehaviour
         //コールバック登録
         goMainmenuButton.onClick.AddListener(GoMainMenu);
         resultPanel.gameObject.SetActive(false);
-        
-        StartCoroutine(DebugTest());
     }
 
     ISceneLoader _sceneLoader;
@@ -47,7 +49,8 @@ public class ResultManager : MonoBehaviour
     {
         Time.timeScale = 0;
         resultPanel.gameObject.SetActive(true);
-        //
+        winIcon.SetActive(true);
+        loseIcon.SetActive(false);
         resultPanel.DOAnchorPosY(0, 1f).SetEase(Ease.OutBounce).SetUpdate(true);
     }
 
@@ -55,13 +58,9 @@ public class ResultManager : MonoBehaviour
     {
         Time.timeScale = 0;
         resultPanel.gameObject.SetActive(true);
+        winIcon.SetActive(false);
+        loseIcon.SetActive(true);
         resultPanel.DOAnchorPosY(0, 1f).SetEase(Ease.OutBounce).SetUpdate(true);
-    }
-
-    IEnumerator DebugTest()
-    {
-        yield return new WaitForSeconds(2);
-        Clear();
     }
 }
 }
