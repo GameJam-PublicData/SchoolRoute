@@ -1,12 +1,13 @@
-using System;
-using Cysharp.Threading.Tasks;
 using MainSystem.Audio;
 using UnityEngine;
+using VContainer;
 
 namespace StageSystem.Player
 {
 public class PlayerHPManager : MonoBehaviour
 {
+    IPlayerLifeUI _playerLifeUI;
+    
     [SerializeField] float MaxHP = 5f;
     [SerializeField]float _currentHP;
     [SerializeField] PlayerAnimationController playerAnimationController;
@@ -16,6 +17,14 @@ public class PlayerHPManager : MonoBehaviour
         _currentHP = MaxHP;
     }
 
+    
+    [Inject]
+    void Construct(IPlayerLifeUI playerLifeUI)
+    {
+        _playerLifeUI = playerLifeUI;
+        _playerLifeUI.SetMaxHP(MaxHP);
+    }
+    
     /// <summary>
     /// 敵からダメージを与える用の関数
     /// </summary>
@@ -30,9 +39,11 @@ public class PlayerHPManager : MonoBehaviour
         }
         _currentHP -= damage;
         AudioManager.Instance.PlaySE("PlayerDamageSE");
-        playerAnimationController.PlayerDamaged();
+        playerAnimationController .PlayerDamaged();
         
-        DamageInterval().Forget(); // ダメージを受けてから次にダメージを受けるまでの無敵時間を開始
+        // UIの更新
+        _playerLifeUI.UpdateLifeUI(_currentHP);
+        
         if (_currentHP <= 0){
             _currentHP = 0;
             Death();
