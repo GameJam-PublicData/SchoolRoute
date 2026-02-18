@@ -7,7 +7,7 @@ namespace StageSystem
 {
 public interface ICountdownManager
 {
-    Action StartCountdown(Action onCompleted = null);
+    void StartCountdown(Action onCompleted = null);
 }
 public class CountdownManager : MonoBehaviour
 {

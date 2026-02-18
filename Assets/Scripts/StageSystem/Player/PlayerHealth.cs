@@ -35,6 +35,8 @@ public class PlayerHealth : MonoBehaviour
         }
         if(other.gameObject.CompareTag("DeathZone"))
         {
+            Debug.Log("Entered Death Zone!");
+            
             _hpManager.TakeDamage(1f);
             _mover.ChangeCanMove(false);
             
@@ -43,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
             // フェードイン・フェードアウトとプレイヤーの移動
             _fade.FadeIn(duration, MoveRespawnPoint);
             await UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5));
-            _fade.FadeOut(duration, _countdown.StartCountdown());
+            _fade.FadeOut(duration, () => _countdown.StartCountdown());
             
             _mover.ChangeCanMove(true);
         }

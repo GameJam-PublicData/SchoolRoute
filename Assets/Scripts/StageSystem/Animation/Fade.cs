@@ -13,26 +13,20 @@ public interface IFade
 }
 public class Fade : IFade
 {
+    Image _fadeImage;
     
-
-    
-     
-    Image fadeImage;
-    public void Init(Image fadeImage)
-    { 
-        this.fadeImage = fadeImage;
-    }
+    public void Init(Image fadeImage) => _fadeImage = fadeImage;
 
     public void FadeIn(float duration = 1, Action onCompleted = null)
     {
-        fadeImage.color = new Color(0, 0, 0, 0);
-        fadeImage.DOFade(1, duration).OnComplete(() => onCompleted?.Invoke());
+        _fadeImage.color = new Color(0, 0, 0, 0);
+        _fadeImage.DOFade(1, duration).OnComplete(() => onCompleted?.Invoke());
     }
 
     public void FadeOut(float duration = 1, Action onCompleted = null)
     {
-        fadeImage.color = new Color(0, 0, 0, 1);
-        fadeImage.DOFade(0, duration).OnComplete(() => onCompleted?.Invoke());
+        _fadeImage.color = new Color(0, 0, 0, 1);
+        _fadeImage.DOFade(0, duration).OnComplete(() => onCompleted?.Invoke());
     }
 }
 }

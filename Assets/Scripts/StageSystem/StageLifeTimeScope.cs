@@ -12,6 +12,7 @@ public class StageLifeTimeScope : LifetimeScope
 {
     [SerializeField] PlayerAnimationController playerAnimationController;
     [SerializeField] PlayerLifeUI playerLifeUI;
+    [SerializeField] CountdownManager countdownManager;
 
     [SerializeField] Image FadeImage;
     protected override void Configure(IContainerBuilder builder)
@@ -20,12 +21,21 @@ public class StageLifeTimeScope : LifetimeScope
         builder.RegisterInstance(playerAnimationController);
         builder.Register<PlayerAnimationController>(Lifetime.Singleton).AsImplementedInterfaces();
         builder.Register<IGravitySystem, GravitySystem>(Lifetime.Singleton).As<IReadOnlyGravitySystem>();
-        builder.Register<IFade, Fade>(Lifetime.Singleton).AsImplementedInterfaces();
+        builder.Register<IFade, Fade>(Lifetime.Singleton);
+        builder.RegisterInstance(countdownManager).As<ICountdownManager>();
     }
 
     void Start()
     {
         var fade = Container.Resolve<IFade>();
+        if (fade != null)
+        {
+            Debug.Log("Fade instance resolved successfully.");
+        }
+        else
+        {
+            Debug.LogError("Failed to resolve IFade instance.");
+        }
         fade.Init(FadeImage);
     }
 }
