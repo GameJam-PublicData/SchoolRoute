@@ -14,11 +14,19 @@ public class StageRouteSO : ScriptableObject
 [Serializable]
 public class StageRouteData
 {
+    [Header("全てワールド軸でForwardがZ軸の正方向になるように設定すること")]
     public Direction GravityDirection;
     public Direction ForwardDirection;
+    [Header("プレイヤーをどっち側から見るか")]
+    public Direction CameraDirection;
     [SerializeField]Vector3 targetPosition;
     public Vector3 TargetPosition => targetPosition;
-    public float MoveSpeed;
+    [SerializeField] Vector3 jumpTargetPosition = Vector3.zero;
+    public Vector3 JumpTargetPosition => jumpTargetPosition;
+    public float CameraRotation;
+    public float CameraDistance;
+
+    public float MoveTime = 3;
 
 }
 }
