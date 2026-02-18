@@ -7,7 +7,7 @@ public class StageLifeTimeScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.Register<GravitySystem>(Lifetime.Singleton).AsImplementedInterfaces();
+        builder.Register<IGravitySystem, GravitySystem>(Lifetime.Singleton).As<IReadOnlyGravitySystem>();
     }
 }
 }

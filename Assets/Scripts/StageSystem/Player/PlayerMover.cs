@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -13,48 +12,78 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float jumpTime = 1f;
     [SerializeField] bool canMove = true;
     IGravitySystem _gravitySystem;
-
+    [SerializeField] CameraSystem cameraSystem;
+    [SerializeField] float gravityJumpForce = 10f;
     [Inject]
     public void Construct(IGravitySystem gravitySystem)
     {
         _gravitySystem = gravitySystem;
     }
-    
+
+    PlayerForward _playerForward;
+    void Awake()
+    {
+        _playerForward = GetComponentInChildren<PlayerForward>();
+    }
+
     StageRouteData _currentRouteData;
     int _currentRouteIndex = 0;
     Vector3 _targetPosition;
+    float _currentSpeed = 1;
+    
     void Start()
     {
-        JumpToNextRoute(stageRouteSO.RouteDataList[_currentRouteIndex],0f);
         UpdateRouteData(true);
     }
+    // 現在のルートデータを更新するメソッド
     void UpdateRouteData(bool isStart = false)
     {
-        if (_currentRouteIndex < stageRouteSO.RouteDataList.Count)
+        if (_currentRouteIndex >= stageRouteSO.RouteDataList.Count) return;
+        transform.DOKill(); 
+        
+        var oldData = _currentRouteData;
+        _currentRouteData = stageRouteSO.RouteDataList[_currentRouteIndex];
+        Debug.Log($"Route {_currentRouteIndex} started. Gravity: {_currentRouteData.GravityDirection}, Forward: {_currentRouteData.ForwardDirection}, Target: {_currentRouteData.TargetPosition}");
+        _targetPosition = _currentRouteData.TargetPosition;
+        
+        if (_currentRouteIndex!=0&&_currentRouteData.GravityDirection == stageRouteSO.RouteDataList[_currentRouteIndex - 1].GravityDirection)
         {
-            transform.DOKill(); 
-            _currentRouteData = stageRouteSO.RouteDataList[_currentRouteIndex];
-            JumpToNextRoute(_currentRouteData);
-            Debug.Log($"Route {_currentRouteIndex} started. Gravity: {_currentRouteData.GravityDirection}, Forward: {_currentRouteData.ForwardDirection}, Target: {_currentRouteData.TargetPosition}");
+            //同じ重力方向の場合はプレイヤーの向きをすばやく変える
+            _playerForward.ChangeForwardDirection(_currentRouteData.ForwardDirection,0.1f);
+        }
+        else _playerForward.ChangeForwardDirection(_currentRouteData.ForwardDirection);
+        //カメラ更新(仮)//todo
+        cameraSystem.SetRotation(_currentRouteData.CameraDirection, _currentRouteData.CameraRotation, _currentRouteData.CameraDistance);
+        //スピード更新
+        _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
+        if (isStart)
+        {
             _currentRouteIndex++;
-            _targetPosition = GetTargetPosition(_currentRouteData);
-            if (isStart) return;
-            if(_currentRouteData.JumpTargetPosition != Vector3.zero) JumpToPosition(_currentRouteData.JumpTargetPosition,_currentRouteData.GravityDirection).Forget();
+            return;
         }
-        else
+        
+        
+        //ジャンプ処理
+        if (oldData.JumpTargetPosition != Vector3.zero &&
+            oldData.GravityDirection != _currentRouteData.GravityDirection) JumpToPosition(oldData).Forget();
+        else if (oldData.JumpTargetPosition != Vector3.zero) Jump(oldData).Forget();
+        else if (oldData.GravityDirection != _currentRouteData.GravityDirection)
         {
-            // すべてのルートを完了した場合の処理（例: プレイヤーを停止させる）
-            _currentRouteData = null;
+            Debug.LogWarning("GravityChangeJump");
+            _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
+            GetComponentInChildren<PlayerJumpManager>().Jump(gravityJumpForce ,_currentRouteData.GravityDirection);
         }
+        
+        _currentRouteIndex++;
+       
     }
 
     void Update()
     {
         if(_currentRouteData == null) return;
         if(!canMove) return;
-        _targetPosition = GetTargetPosition(_currentRouteData);
         // プレイヤーの移動処理
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition , Time.deltaTime * _currentRouteData.MoveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition , Time.deltaTime * _currentSpeed);
         
         // プレイヤーが目的地に到達したかどうかをチェック
         if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
@@ -63,99 +92,54 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
-    async UniTask JumpToPosition(Vector3 targetPosition,Direction nextGravityDirection = Direction.Down)
+    async UniTask Jump(StageRouteData oldData)
+    {
+        Debug .LogWarning($"SimpleJump to {oldData.JumpTargetPosition} from {transform.position}");
+        canMove = false;
+        PlayerJumpManager jumpManager = GetComponentInChildren<PlayerJumpManager>();
+        jumpManager.enabled = false;
+        jumpManager.transform.DOLocalJump(jumpManager.transform.localPosition, 1f, 5, jumpTime).SetEase(Ease.OutSine);
+        transform.DOMove(oldData.JumpTargetPosition, jumpTime).SetEase(Ease.OutSine);
+        await UniTask.Delay(TimeSpan.FromSeconds(jumpTime),cancellationToken:this.GetCancellationTokenOnDestroy());
+        jumpManager.enabled = true;
+        canMove = true;
+    }
+
+    async UniTask JumpToPosition(StageRouteData data)
     {
         canMove = false;
-        Debug.Log($"Jumping to {targetPosition} from {transform.position}");
-        GetComponent<PlayerJumpManager>().JumpAsync(destroyCancellationToken).Forget();
-        GetComponent<PlayerJumpManager>().Jump(10);
-        GetComponent<Collider>().enabled = false;
+        Debug.LogWarning($"TargetJump to {data.JumpTargetPosition} from {transform.position}");
+        GetComponentInChildren<PlayerJumpManager>().Jump(gravityJumpForce,data.GravityDirection);
+        GetComponentInChildren<Collider>().enabled = false;
 
-        switch (nextGravityDirection)
+        switch (data.GravityDirection)
         {
             case Direction.Up:
             case Direction.Down:
             {
-                transform.DOMoveY(targetPosition.y, jumpTime).SetEase(Ease.OutSine);
+                transform.DOMoveY(data.JumpTargetPosition.y, jumpTime).SetEase(Ease.OutSine);
                 break;
             }
             case Direction.Backward:
             case Direction.Forward:
             {
-                transform.DOMoveY(targetPosition.y, jumpTime).SetEase(Ease.OutSine);
+                transform.DOMoveY(data.JumpTargetPosition.y, jumpTime).SetEase(Ease.OutSine);
                 break;
             }
             case Direction.Left:
             case Direction.Right:
             {
-                transform.DOMoveX(targetPosition.x, jumpTime).SetEase(Ease.OutSine);
+                transform.DOMoveY(data.JumpTargetPosition.y, jumpTime).SetEase(Ease.OutSine);
                 break;
             }
         }
         
         await UniTask.Delay(TimeSpan.FromSeconds(0.1),cancellationToken:this.GetCancellationTokenOnDestroy());
         _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
-        GetComponent<Collider>().enabled = true;
+        GetComponentInChildren<Collider>().enabled = true;
         await UniTask.Delay(TimeSpan.FromSeconds(jumpTime/2),cancellationToken:this.GetCancellationTokenOnDestroy());
         canMove = true;
-        Debug.Log($"Arrived at {targetPosition}");
-    }
-    
-    //重力が変わる時に角度をフェード
-    void JumpToNextRoute(StageRouteData newData, float duration = 1f)
-    {
-        Vector3 newRotation = _gravityRotationMap[newData.GravityDirection];
-        newRotation += _forwardDirectionMap[newData.ForwardDirection];
-        Debug.Log($"New Rotation: {newRotation}+, Gravity: {newData.GravityDirection}, Forward: {newData.ForwardDirection}");
-        if(duration == 0f)
-        {
-            transform.localRotation = Quaternion.Euler(newRotation);
-            return;
-        }
-        
-        transform.DORotate(newRotation, duration).SetEase(Ease.InOutSine);
-        // ここで、oldRotationからnewRotationへのフェード処理を実装
-        // 例えば、Quaternion.Lerpを使用して回転を滑らかに変化させることができます。
-    }
-    
-    Dictionary<Direction, Vector3> _gravityRotationMap = new Dictionary<Direction, Vector3>()
-    {
-        { Direction.Forward, new Vector3(0,0,90) },
-        { Direction.Backward, new Vector3(0,0,-90) },
-        { Direction.Left, new Vector3(0,0,-90) },
-        { Direction.Right, new Vector3(0,0,90) },
-        { Direction.Down,Vector3.zero },
-        { Direction.Up, new Vector3(0,0,180) }
-    };
-    Dictionary<Direction,Vector3> _forwardDirectionMap = new Dictionary<Direction, Vector3>()
-    {
-        { Direction.Forward, new Vector3(0,0,0) },
-        { Direction.Backward, new Vector3(0,180,0) },
-        { Direction.Left, new Vector3(0,-90,0) },
-        { Direction.Right, new Vector3(0,90,0) },
-        { Direction.Down, new Vector3(90,0,0) },
-        { Direction.Up,  new Vector3(-90,0,0) }
-    };
-    
-
-    Vector3 GetTargetPosition(StageRouteData data)
-    {
-        switch (data.ForwardDirection)
-        {
-            case Direction.Forward:
-                return new Vector3(transform.position.x, transform.position.y, data.TargetPosition.z);
-            case Direction.Backward:
-                return new Vector3(transform.position.x, transform.position.y, data.TargetPosition.z);
-            case Direction.Left:
-                return new Vector3(data.TargetPosition.x, transform.position.y, transform.position.z);
-            case Direction.Right:
-                return new Vector3(data.TargetPosition.x, transform.position.y, transform.position.z);
-            case Direction.Down:
-                return new Vector3(transform.position.x, data.TargetPosition.y, transform.position.z);
-            case Direction.Up:
-                return new Vector3(transform.position.x, data.TargetPosition.y, transform.position.z);
-        }
-        return transform.position; // デフォルトは現在の位置
+        Debug.Log($"Arrived at {data.JumpTargetPosition}");
     }
 }
 
