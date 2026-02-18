@@ -244,13 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad9daae12f7804606ab350155704388b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Boss.BossAnimation
-  AnimationTime: 0.5
+  AnimationTime: 1
   headObjects:
   - {fileID: 153841513}
   - {fileID: 153841512}
   - {fileID: 153841511}
   - {fileID: 153841510}
-  headAnimationMovement: 0.2
+  headAnimationMovement: 0.18
   bodyObjects:
   - {fileID: 153841509}
   - {fileID: 153841508}
