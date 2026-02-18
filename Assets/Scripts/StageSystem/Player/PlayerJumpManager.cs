@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InputSystemActions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
@@ -18,8 +19,8 @@ public class PlayerJumpManager : MonoBehaviour
     InputActions _inputActions;
     IReadOnlyGravitySystem _gravitySystem;
     CancellationTokenSource _jumpCTS = new();
-    bool _isJumping = true;
-    int _groundCount;
+    [SerializeField]bool isJumping = true;
+    [SerializeField]int groundCount;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -35,14 +36,14 @@ public class PlayerJumpManager : MonoBehaviour
     void Awake()
     {
         _inputActions = new InputActions();
-        _inputActions.Player.Jump.Enable();
+        _inputActions.Player.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
         JumpAsync(_jumpCTS.Token).Forget();
     }
     public void Jump(float force,Direction direction)
     {
-        _isJumping = true;
+        isJumping = true;
         Debug.Log("Jump performed!!!!!");
         _currentJumpForce = force;
 
@@ -82,9 +83,9 @@ public class PlayerJumpManager : MonoBehaviour
     void OnJumpEnabled(InputAction.CallbackContext context)
     {
         Debug.Log("JumpInput");
-        if (_isJumping == true) return;
-        if(_groundCount <= 0) return;
-        _isJumping = true;
+        if (isJumping == true) return;
+        if(groundCount <= 0) return;
+        isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
         _currentJumpForce = jumpForce;
@@ -105,7 +106,7 @@ public class PlayerJumpManager : MonoBehaviour
         while (!token.IsCancellationRequested )
         {
             await UniTask.Delay(100, cancellationToken: token);
-            if( _isJumping == false) continue;
+            if( isJumping == false) continue;
             if(!_isJumpButtonPressed)
             {
                 _currentJumpForce -= jumpForce/3.5f;
@@ -124,7 +125,10 @@ public class PlayerJumpManager : MonoBehaviour
     void Update()
     {
         transform.localRotation = Quaternion.Euler(_gravityRotationMap[_gravitySystem.GetGravityDirection()]);
-        if(_isJumping == false) return;
+        
+        
+        
+        if(isJumping == false) return;
         
         Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
         vec *= -1;// 重力の反対方向に移動
@@ -142,36 +146,13 @@ public class PlayerJumpManager : MonoBehaviour
         { Direction.Up, new Vector3(0, 0, 180) }
     };
 
-        
-        
 
-    Vector3 GetGravityVector()
-    {
-        switch (_gravitySystem.GetGravityDirection())
-        {
-            case Direction.Up:
-                return Vector3.up * _currentJumpForce;
-            case Direction.Down:
-                return Vector3.down * _currentJumpForce;
-            case Direction.Left:
-                return Vector3.left * _currentJumpForce;
-            case Direction.Right:
-                return Vector3.right * _currentJumpForce;
-            case Direction.Forward:
-                return Vector3.forward * _currentJumpForce;
-            case Direction.Backward:
-                return Vector3.back * _currentJumpForce;
-            default:
-                return Vector3.zero;
-        }
-    }
-    
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Ground"))
         {
-            _groundCount++;
-            _isJumping = false;
+            groundCount++;
+            isJumping = false;
             _currentJumpForce = 0;
             Debug.Log("Now Grounded!");
             transform.DOKill();
@@ -183,21 +164,23 @@ public class PlayerJumpManager : MonoBehaviour
         if(other.gameObject.CompareTag("Ground"))
         {
       
-            _groundCount--;
-            if(_groundCount <= 0)
+            groundCount--;
+            if(groundCount <= 0)
             {
-                _isJumping = true;
+                isJumping = true;
             }
         }
     }
-    
 
+
+
+    
 
     void OnDisable()
     {
         _inputActions.Player.Jump.started -= OnJumpEnabled;
         _inputActions.Player.Jump.canceled -= OnJumpCanceled;
-        _inputActions.Player.Jump.Disable();
+        _inputActions.Player.Disable();
     }
 } 
 }
