@@ -14,6 +14,7 @@ public class PlayerMover : MonoBehaviour
     IGravitySystem _gravitySystem;
     [SerializeField] CameraSystem cameraSystem;
     [SerializeField] float gravityJumpForce = 10f;
+    
     [Inject]
     public void Construct(IGravitySystem gravitySystem)
     {
@@ -21,6 +22,7 @@ public class PlayerMover : MonoBehaviour
     }
 
     PlayerForward _playerForward;
+
     void Awake()
     {
         _playerForward = GetComponentInChildren<PlayerForward>();
@@ -75,7 +77,6 @@ public class PlayerMover : MonoBehaviour
         }
         
         _currentRouteIndex++;
-       
     }
 
     void Update()
@@ -83,6 +84,7 @@ public class PlayerMover : MonoBehaviour
         if(_currentRouteData == null) return;
         if(!canMove) return;
         // プレイヤーの移動処理
+        
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition , Time.deltaTime * _currentSpeed);
         
         // プレイヤーが目的地に到達したかどうかをチェック
@@ -141,8 +143,8 @@ public class PlayerMover : MonoBehaviour
         canMove = true;
         Debug.Log($"Arrived at {data.JumpTargetPosition}");
     }
+
+    public void ChangeCanMove(bool value) => canMove = value;
 }
-
-
 }
 

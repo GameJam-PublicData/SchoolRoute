@@ -1,14 +1,27 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
 namespace StageSystem.Animation
 {
-public class Fade : MonoBehaviour
+public interface IFade
 {
-    [SerializeField] Image fadeImage;
+    void Init(Image fadeImage);
+    void FadeIn(float duration = 1, Action onCompleted = null);
+    void FadeOut(float duration = 1, Action onCompleted = null);
+}
+public class Fade : IFade
+{
+    
+
+    
+     
+    Image fadeImage;
+    public void Init(Image fadeImage)
+    { 
+        this.fadeImage = fadeImage;
+    }
 
     public void FadeIn(float duration = 1, Action onCompleted = null)
     {
