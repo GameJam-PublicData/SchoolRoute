@@ -12,6 +12,7 @@ public class StageLifeTimeScope : LifetimeScope
         builder.RegisterInstance(_playerAnimationController);
         builder.Register<GravitySystem>(Lifetime.Singleton).AsImplementedInterfaces();
         builder.Register<PlayerAnimationController>(Lifetime.Singleton).AsImplementedInterfaces();
+        builder.Register<IGravitySystem, GravitySystem>(Lifetime.Singleton).As<IReadOnlyGravitySystem>();
     }
 }
 }
