@@ -182,7 +182,6 @@ public class PlayerJumpManager : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("Now Jumping!");
             _groundCount--;
             if(_groundCount <= 0)
             {
