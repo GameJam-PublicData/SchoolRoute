@@ -12,11 +12,12 @@ public class UIAnimater : MonoBehaviour
     private void Start()
     {
         _image = GetComponent<Image>();
-        Animate().Forget();
+        AnimationLoop().Forget();
     }
     
-    private async UniTask Animate()
+    private async UniTask AnimationLoop()
     {
+        //アニメーションループ
         while (true)
         {
             for (int i = 0; i < animationSprites.Length; i++)
