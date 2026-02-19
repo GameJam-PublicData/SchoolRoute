@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea4febad3fbe4cb586a369da6d784db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageSystem.CameraSystem
-  rotationSpeed: 1
+  rotationSpeed: 100
   easeType: 4
 --- !u!1 &7006389587667983874
 GameObject:

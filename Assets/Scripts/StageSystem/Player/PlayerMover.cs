@@ -1,4 +1,5 @@
 using System;
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -54,11 +55,24 @@ public class PlayerMover : MonoBehaviour
         else _playerForward.ChangeForwardDirection(_currentRouteData.ForwardDirection);
         //カメラ更新(仮)//todo
         //cameraSystem.SetRotation(_currentRouteData.CameraDirection, _currentRouteData.CameraRotation, _currentRouteData.CameraDistance);
-        UniTask.Delay(TimeSpan.FromSeconds(jumpTime)).ContinueWith(() =>
+        // csharp
+        UniTask.Void(async () =>
         {
-            if (isStart) return;
-            cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition, _currentRouteData.LookZRotation);
-        }).Forget();
+            var localIsStart = isStart;
+            var localRoute = _currentRouteData;
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(jumpTime), cancellationToken: this.GetCancellationTokenOnDestroy());
+                if (localIsStart) return;
+                await UniTask.SwitchToMainThread();
+                cameraSystem.SetRotation(localRoute.CameraTargetLocalPosition, localRoute.CameraLocalPosition, localRoute.LookZRotation);
+            }
+            catch (OperationCanceledException)
+            {
+                // 破棄やキャンセル時は無視
+            }
+        });
+
         //スピード更新
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
         if (isStart)
