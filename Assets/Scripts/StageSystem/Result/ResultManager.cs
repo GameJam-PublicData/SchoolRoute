@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using MainSystem.Audio;
 using MainSystem.Scene;
 using UnityEngine.Serialization;
 using VContainer;
@@ -42,11 +43,13 @@ public class ResultManager : MonoBehaviour
     {
         Debug.Log("Go MainMenu");
         Time.timeScale = 1;
+        AudioManager.Instance.PlaySE("ButtonSE");
         _sceneLoader.LoadScene(SceneType.MainMenuScene);
     }
 
     public void Clear()
     {
+        AudioManager.Instance.PlaySE("ClearSE");
         Time.timeScale = 0;
         resultPanel.gameObject.SetActive(true);
         winIcon.SetActive(true);
@@ -56,6 +59,7 @@ public class ResultManager : MonoBehaviour
 
     public void Lose()
     {
+        AudioManager.Instance.PlaySE("LoseSE");
         Time.timeScale = 0;
         resultPanel.gameObject.SetActive(true);
         winIcon.SetActive(false);

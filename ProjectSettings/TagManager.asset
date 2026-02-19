@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Jump Point
+  - ClearArea
   layers:
   - Default
   - TransparentFX

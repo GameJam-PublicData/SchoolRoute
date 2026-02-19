@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using MainSystem.Audio;
 using MainSystem.UI;
+using StageSystem.Result;
 using UnityEngine;
 using VContainer;
 
@@ -17,6 +18,8 @@ public class PlayerHPManager : MonoBehaviour
     void Start()
     {
         _currentHP = MaxHP;
+        
+        AudioManager.Instance.PlayBGM("StageBGM");
     }
 
     
@@ -69,7 +72,7 @@ public class PlayerHPManager : MonoBehaviour
     /// </summary>
     void Death()
     {
-        Debug.LogError("Player has died! Implement death behavior here.");
+        ResultManager.Instance.Lose();
     }
 }
 }
