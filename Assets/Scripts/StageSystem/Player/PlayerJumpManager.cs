@@ -159,7 +159,7 @@ public class PlayerJumpManager : MonoBehaviour
             transform.DOKill();
         }
 
-        if (other.gameObject.CompareTag("ClaerArea"))
+        if (other.gameObject.CompareTag("ClearArea"))
         {
             ResultManager.Instance.Clear();
         }

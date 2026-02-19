@@ -4,6 +4,7 @@ using MainSystem.Scene;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
+using UnityEngine.SceneManagement;
 
 namespace MainMenu
 {
@@ -20,13 +21,6 @@ public class MainMenuManager : MonoBehaviour
     
     bool _canClick = true;
     
-    ISceneLoader _sceneLoader;
-    
-    [Inject]
-    public void Construct(ISceneLoader sceneLoader)
-    {
-        _sceneLoader = sceneLoader;
-    }
 
     void Start()
     {
@@ -48,12 +42,9 @@ public class MainMenuManager : MonoBehaviour
     /// </summary>
     void OnStartButton()
     {
-        //シーンをロード
-        if (_sceneLoader != null && _canClick)
-        { 
-            _sceneLoader.LoadScene(SceneType.Stage1Scene);
+        
             AudioManager.Instance.PlaySE("ButtonSE");
-        }
+            SceneManager.LoadScene("Stage1Scene");
     }
     
     /// <summary>
