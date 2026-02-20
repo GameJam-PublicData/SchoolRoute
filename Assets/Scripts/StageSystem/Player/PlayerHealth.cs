@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     IFade _fade;
     ICountdownManager _countdown;
     PlayerJumpManager _jumpManager;
+    YMover _yMover;
 
     GameObject grandParent;
     Vector3 respawnPoint;
@@ -27,11 +28,11 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        
         _hpManager = GetComponentInChildren<PlayerHPManager>();
         _mover = GetComponentInChildren<PlayerMover>();
         _jumpManager = GetComponentInChildren<PlayerJumpManager>();
-        
+        _yMover = GetComponentInChildren<YMover>();
+        Debug.Log($"_yMover found: {_yMover != null}");
     }
 
     bool FallChack = true;
@@ -54,6 +55,8 @@ public class PlayerHealth : MonoBehaviour
             
         var duration = 1.5f;
         // フェードイン
+        _yMover.SetInputEnabled(false);
+        
         _fade.FadeIn(duration, () => _mover.ResetPosition(respawnPoint));
         UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
         {
@@ -80,6 +83,7 @@ public class PlayerHealth : MonoBehaviour
                 FallChack = true;
                 _mover.canMove = true;
                 _jumpManager.ResetJump();
+                _yMover.SetInputEnabled(true);
             })); 
         });
 
