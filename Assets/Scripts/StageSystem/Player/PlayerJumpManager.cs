@@ -21,6 +21,7 @@ public class PlayerJumpManager : MonoBehaviour
     CancellationTokenSource _jumpCTS = new();
     [SerializeField]bool isJumping = true;
     [SerializeField]int groundCount;
+    [SerializeField] bool debugNoGraavity = false;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -132,7 +133,7 @@ public class PlayerJumpManager : MonoBehaviour
         
         Vector3 vec = _gravitySystem.OppositeDirections[_gravitySystem.GetGravityDirection()];
         vec *= -1;// 重力の反対方向に移動
-        
+        if(debugNoGraavity)return;
         transform.localPosition += vec * (_currentJumpForce * Time.deltaTime);
     }
 
