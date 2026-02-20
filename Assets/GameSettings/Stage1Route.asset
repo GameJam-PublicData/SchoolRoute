@@ -39,7 +39,7 @@ MonoBehaviour:
     MoveTime: 10
   - GravityDirection: 5
     ForwardDirection: 2
-    targetPosition: {x: -65, y: 1, z: 48}
+    targetPosition: {x: -65, y: 1, z: 47}
     jumpTargetPosition: {x: 0, y: 0, z: 0}
     CameraTargetLocalPosition: {x: -30, y: 0, z: -40}
     CameraLocalPosition: {x: 10, y: 0, z: 10}
