@@ -7,7 +7,7 @@ namespace StageSystem
 {
 public interface ICountdownManager
 {
-    void StartCountdown(Action onCompleted = null);
+    UniTask StartCountdown(Action onCompleted = null);
 }
 public class CountdownManager : MonoBehaviour, ICountdownManager
 {
@@ -18,13 +18,13 @@ public class CountdownManager : MonoBehaviour, ICountdownManager
     [SerializeField] List<GameObject> countdownSteps;
     [SerializeField] GameObject goObject;
     
-    public async void StartCountdown(Action onCompleted = null)
+    public async UniTask StartCountdown(Action onCompleted = null)
     {
         foreach (var step in countdownSteps)
         {
             await InstanceShowStepObject(step);
         }
-        
+
         InstanceShowStepObject(goObject, 1.25f).Forget();
         onCompleted?.Invoke();
     }
