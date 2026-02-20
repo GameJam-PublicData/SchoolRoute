@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace StageSystem.Player
+{
+[CreateAssetMenu(menuName = "ScriptableObject/StageRoute")]
+public class StageRouteSO : ScriptableObject
+{
+    [SerializeField]List<StageRouteData> routeDataList = new List<StageRouteData>();
+    public IReadOnlyList<StageRouteData> RouteDataList => routeDataList;
+}
+
+[Serializable]
+public class StageRouteData
+{
+    [Header("全てワールド軸でForwardがZ軸の正方向になるように設定すること")]
+    public Direction GravityDirection;
+    public Direction ForwardDirection;
+    [SerializeField]Vector3 targetPosition;
+    public Vector3 TargetPosition => targetPosition;
+    [SerializeField] Vector3 jumpTargetPosition = Vector3.zero;
+    public Vector3 JumpTargetPosition => jumpTargetPosition;
+    public Vector3 CameraTargetLocalPosition = Vector3.zero;
+    public Vector3 CameraLocalPosition = new Vector3(0,0,-3);
+    public float LookZRotation = 0;
+ 
+    
+    public float MoveTime = 3;
+
+}
+}
