@@ -28,7 +28,7 @@ MonoBehaviour:
     CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
     CameraLocalPosition: {x: 5, y: 0, z: 0.4}
     LookZRotation: -90
-    MoveTime: 3
+    MoveTime: 8
   - GravityDirection: 2
     ForwardDirection: 4
     targetPosition: {x: -24.4, y: 1, z: 48}
@@ -36,7 +36,7 @@ MonoBehaviour:
     CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
     CameraLocalPosition: {x: 1, y: 0, z: -4}
     LookZRotation: 0
-    MoveTime: 3
+    MoveTime: 8
   - GravityDirection: 5
     ForwardDirection: 2
     targetPosition: {x: -65, y: 1, z: 48}
@@ -44,7 +44,7 @@ MonoBehaviour:
     CameraTargetLocalPosition: {x: -30, y: 0, z: -40}
     CameraLocalPosition: {x: 10, y: 0, z: 10}
     LookZRotation: 0
-    MoveTime: 5
+    MoveTime: 8
   - GravityDirection: 3
     ForwardDirection: 5
     targetPosition: {x: -66, y: 1, z: 10}
