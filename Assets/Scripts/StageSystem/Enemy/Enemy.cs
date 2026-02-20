@@ -54,14 +54,14 @@ public class Enemy : MonoBehaviour,IEnemy
             if (isLine == false)
             {
                 //z+の方向に吹っ飛ばす
-                body.DOLocalMoveZ(body.transform.localPosition.z + 30f, 3f)
+                body.DOLocalMoveZ(body.transform.localPosition.z - 30f, 3f)
                     .SetEase(Ease.OutBack)
                     .OnComplete(() => Destroy(gameObject));
             }
             else
             {
                 //x+の方向に吹っ飛ばす
-                body.DOLocalMoveX(body.transform.localPosition.x + 15f, 4f)
+                body.DOLocalMoveX(body.transform.localPosition.x - 15f, 4f)
                     .SetEase(Ease.OutBack)
                     .OnComplete(() => Destroy(gameObject));
             }
