@@ -119,6 +119,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &176564640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6098072285172328091, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+  m_PrefabInstance: {fileID: 3696052742766209110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &285085366 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7600120225280200906, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+  m_PrefabInstance: {fileID: 3696052742766209110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &659206124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +194,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2726702952007632714, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: m_Name
+      value: ClearArea
+      objectReference: {fileID: 0}
     - target: {fileID: 3908057403280349577, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -224,10 +238,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4078872132144068786, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972390529950688146, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -64.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972390529950688146, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5291387551838538263, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308010771514954105, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: autoInjectGameObjects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308010771514954105, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: 'autoInjectGameObjects.Array.data[2]'
+      value: 
+      objectReference: {fileID: 176564640}
     - target: {fileID: 6837559405328681560, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
       propertyPath: m_Name
       value: Stage1
       objectReference: {fileID: 0}
+    - target: {fileID: 7266320868369112791, guid: 499247933038241c7a37ad0055a8c8d5, type: 3}
+      propertyPath: Canvas
+      value: 
+      objectReference: {fileID: 285085366}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
