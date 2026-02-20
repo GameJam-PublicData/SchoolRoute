@@ -19,10 +19,17 @@ public class EnemyAnimation : MonoBehaviour
 
     public async UniTask Animate()
     {
-        for(int i = 0;i < animationSprites.Length;i++)
+        try
         {
-            _enemySpriteRenderer.sprite = animationSprites[i];
-            await UniTask.Delay((int)(animationInterval * 1000));
+            for (int i = 0; i < animationSprites.Length; i++)
+            {
+                _enemySpriteRenderer.sprite = animationSprites[i];
+                await UniTask.Delay((int)(animationInterval * 1000));
+            }
+        }
+        catch (Exception e)
+        {
+            return;
         }
     }
 }

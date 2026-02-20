@@ -4,6 +4,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InputSystemActions;
+using MainSystem.Audio;
+using StageSystem.Result;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,18 +38,21 @@ public class PlayerJumpManager : MonoBehaviour
     
     void Awake()
     {
+        
         _inputActions = new InputActions();
         _inputActions.Player.Enable();
         _inputActions.Player.Jump.started += OnJumpEnabled;
         _inputActions.Player.Jump.canceled += OnJumpCanceled;
         JumpAsync(_jumpCTS.Token).Forget();
     }
+
+    
     public void Jump(float force,Direction direction)
     {
         isJumping = true;
         Debug.Log("Jump performed!!!!!");
         _currentJumpForce = force;
-
+        
         /*
         switch (direction)
         {
@@ -86,6 +91,7 @@ public class PlayerJumpManager : MonoBehaviour
         Debug.Log("JumpInput");
         if (isJumping == true) return;
         if(groundCount <= 0) return;
+        AudioManager.Instance.PlaySE("PlayerJumpSE");
         isJumping = true;
         Debug.Log("Jump performed!");
         _isJumpButtonPressed = true;
@@ -104,6 +110,7 @@ public class PlayerJumpManager : MonoBehaviour
     
     async UniTask JumpAsync(CancellationToken token)
     {
+        
         while (!token.IsCancellationRequested )
         {
             await UniTask.Delay(100, cancellationToken: token);
@@ -157,6 +164,11 @@ public class PlayerJumpManager : MonoBehaviour
             _currentJumpForce = 0;
             Debug.Log("Now Grounded!");
             transform.DOKill();
+        }
+
+        if (other.gameObject.CompareTag("ClearArea"))
+        {
+            ResultManager.Instance.Clear();
         }
     }
 

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MainSystem.Audio;
 using MainSystem.Scene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,6 @@ public class MainMenuManager : MonoBehaviour
     float _licenseTextDefaultX = -2000f;
     
     bool _canClick = true;
-    
     ISceneLoader _sceneLoader;
     
     [Inject]
@@ -30,6 +30,8 @@ public class MainMenuManager : MonoBehaviour
     void Start()
     {
         Init();
+        
+        AudioManager.Instance.PlayBGM("MainMenuBGM");
     }
 
     void Init()
@@ -45,11 +47,8 @@ public class MainMenuManager : MonoBehaviour
     /// </summary>
     void OnStartButton()
     {
-        //シーンをロード
-        if (_sceneLoader != null && _canClick)
-        { 
-            _ = _sceneLoader.LoadScene(SceneType.Stage1Scene);
-        }
+        AudioManager.Instance.PlaySE("ButtonSE");
+        _sceneLoader.LoadScene(SceneType.Stage1Scene);
     }
     
     /// <summary>
@@ -62,6 +61,8 @@ public class MainMenuManager : MonoBehaviour
             _canClick = false;
             licenseTextObject.anchoredPosition = new Vector2(_licenseTextDefaultX, licenseTextObject.anchoredPosition.y);
             licenseTextObject.DOAnchorPosX(0f,1f).SetEase(Ease.OutBack).OnComplete(() => _canClick = true);
+            AudioManager.Instance.PlaySE("ButtonSE");
+            
         }
     }
 
@@ -75,6 +76,7 @@ public class MainMenuManager : MonoBehaviour
             _canClick = true;
             licenseTextObject.anchoredPosition = new Vector2(0, licenseTextObject.anchoredPosition.y);
             licenseTextObject.DOAnchorPosX(_licenseTextDefaultX,1f).SetEase(Ease.OutBack).OnComplete(() => _canClick = true);
+            AudioManager.Instance.PlaySE("ButtonSE");
         }
     }
 }
