@@ -40,44 +40,49 @@ public class PlayerHealth : MonoBehaviour
         if(Vector3.Distance(_jumpManager.transform.position,transform.position) < 5f) return;
         {
             if(!FallChack) return;
-            FallChack = false;
-            Debug.LogError("Fell off the stage!");
             _hpManager.TakeDamage(1);
-            _mover.canMove = false;
-            _jumpManager.StopJump();
+        }
+    }
+
+    public void PlayerDamaged()
+    {
+       
+        FallChack = false;
+        Debug.LogError("Fell off the stage!");
+        _mover.canMove = false;
+        _jumpManager.StopJump();
             
-            var duration = 1.5f;
-            // フェードイン
-            _fade.FadeIn(duration, () => _mover.ResetPosition(respawnPoint));
-            UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
+        var duration = 1.5f;
+        // フェードイン
+        _fade.FadeIn(duration, () => _mover.ResetPosition(respawnPoint));
+        UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
+        {
+            Debug.Log("Jumping to the last checkpoint...+" + _mover.nextRouteIndex);
+            Debug.Log( _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 1].TargetPosition);
+            if (_mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].JumpTargetPosition != Vector3.zero)
             {
-                Debug.Log("Jumping to the last checkpoint...+" + _mover.nextRouteIndex);
-                Debug.Log( _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 1].TargetPosition);
-                if (_mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].JumpTargetPosition != Vector3.zero)
-                {
-                    _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].JumpTargetPosition;
-                }
-                else _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].TargetPosition;
-                _mover.nextRouteIndex -= 2;
-                _jumpManager.transform.localPosition = Vector3.zero;
-                _mover.UpdateRouteData(true);
+                _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].JumpTargetPosition;
+            }
+            else _mover.transform.position = _mover.stageRouteSO.RouteDataList[_mover.nextRouteIndex - 2].TargetPosition;
+            _mover.nextRouteIndex -= 2;
+            _jumpManager.transform.localPosition = Vector3.zero;
+            _mover.UpdateRouteData(true);
                 
          
               
-            });
-            // 待機
-            UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
+        });
+        // 待機
+        UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
+        {
+            // フィードアウト
+            _fade.FadeOut(duration, () => _countdown.StartCountdown(() =>
             {
-                // フィードアウト
-                _fade.FadeOut(duration, () => _countdown.StartCountdown(() =>
-                {
-                    FallChack = true;
-                    _mover.canMove = true;
-                    _jumpManager.ResetJump();
-                })); 
-            });
-            
-        }
+                FallChack = true;
+                _mover.canMove = true;
+                _jumpManager.ResetJump();
+            })); 
+        });
+
     }
 
     async void OnTriggerEnter(Collider other)

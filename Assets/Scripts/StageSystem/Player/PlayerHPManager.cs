@@ -14,12 +14,14 @@ public class PlayerHPManager : MonoBehaviour
     [SerializeField] float MaxHP = 5f;
     [SerializeField]float _currentHP;
     [SerializeField] PlayerAnimationController playerAnimationController;
-
+    
+    PlayerHealth _playerHealth;
     void Start()
     {
         _currentHP = MaxHP;
         
         AudioManager.Instance.PlayBGM("StageBGM");
+            _playerHealth = GetComponent<PlayerHealth>();
     }
 
     
@@ -42,6 +44,7 @@ public class PlayerHPManager : MonoBehaviour
             Debug .Log("Player is invincible and cannot take damage right now.");
             return false; // 無敵状態ならダメージを受けない
         }
+        _playerHealth.PlayerDamaged();
         _currentHP -= damage;
         //AudioManager.Instance.PlaySE("PlayerDamageSE");
         playerAnimationController .PlayerDamaged();
