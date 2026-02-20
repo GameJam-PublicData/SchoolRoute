@@ -48,4 +48,4 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  loadBootSceneOnStart: 1
+  loadBootSceneOnStart: 0
