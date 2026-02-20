@@ -27,6 +27,7 @@ public class SceneLoader : ISceneLoader
     
     public async UniTask LoadScene(SceneType sceneType)
     {
+        Debug.LogError("SceneLoader.LoadScene called with sceneType: " + sceneType);
         var asyncOperation = SceneManager.LoadSceneAsync(sceneType.ToString());
         
         if(asyncOperation == null)
