@@ -7,6 +7,7 @@ namespace StageSystem.Player
 {
 public class YMover : MonoBehaviour
 {
+    [SerializeField] bool yInput = true;
     void Start()
     {
         _inputActions = new InputActions();
@@ -32,7 +33,8 @@ public class YMover : MonoBehaviour
     void OnMove(InputAction.CallbackContext context)
     {
         Debug.LogError("Move Input: " + context.ReadValue<Vector2>());
-        _moveValue = context.ReadValue<Vector2>().y;
+        if(yInput) _moveValue = context.ReadValue<Vector2>().y;
+        else _moveValue = context.ReadValue<Vector2>().x;
     }
     void MoveCancel(InputAction.CallbackContext context)
     {
