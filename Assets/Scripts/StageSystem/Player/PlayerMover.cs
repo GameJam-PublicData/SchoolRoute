@@ -29,7 +29,7 @@ public class PlayerMover : MonoBehaviour
     StageRouteData _currentRouteData;
     int _currentRouteIndex = 0;
     Vector3 _targetPosition;
-    float _currentSpeed = 1;
+    float _currentSpeed = 0.01f;
     
     void Start()
     {
@@ -56,9 +56,9 @@ public class PlayerMover : MonoBehaviour
         //cameraSystem.SetRotation(_currentRouteData.CameraDirection, _currentRouteData.CameraRotation, _currentRouteData.CameraDistance);
         UniTask.Delay(TimeSpan.FromSeconds(jumpTime)).ContinueWith(() =>
         {
-            if (isStart) return;
-            cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition, _currentRouteData.LookZRotation);
         }).Forget();
+        if (!isStart)  cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition, _currentRouteData.LookZRotation);
+
         //スピード更新
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
         if (isStart)

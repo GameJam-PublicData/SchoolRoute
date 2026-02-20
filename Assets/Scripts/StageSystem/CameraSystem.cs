@@ -51,9 +51,9 @@ public class CameraSystem : MonoBehaviour, ICameraSystem
     {
         _rootObject.rotation = Quaternion.identity;
         
-        transform.rotation = Quaternion.LookRotation(_rootObject.transform.position + _targetDir);
-        transform.Rotate(new (0,0,_lookZRotation));
-        //transform.LookAt(_rootObject.transform.position + _targetDir);
+        //transform.rotation = Quaternion.LookRotation(_rootObject.transform.position + _targetDir);
+        //transform.Rotate(new (0,0,_lookZRotation));
+        transform.LookAt(_rootObject.transform.position + _targetDir, Vector3.up);
 
        
     }

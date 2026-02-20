@@ -15,31 +15,41 @@ MonoBehaviour:
   routeDataList:
   - GravityDirection: 5
     ForwardDirection: 2
-    CameraDirection: 3
-    targetPosition: {x: 0, y: 1, z: 3}
+    targetPosition: {x: 0, y: 0.75, z: 0.5}
     jumpTargetPosition: {x: 0, y: 0, z: 0}
     CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
-    CameraLocalPosition: {x: 0, y: 0, z: 0}
-    CameraRotation: 0
-    CameraDistance: 1
-    MoveTime: 1
+    CameraLocalPosition: {x: 5, y: 0, z: 0.4}
+    LookZRotation: -90
+    MoveTime: 0.01
   - GravityDirection: 5
     ForwardDirection: 2
-    CameraDirection: 3
-    targetPosition: {x: -24.4, y: 1, z: 3}
+    targetPosition: {x: -24.4, y: 0.75, z: 0.5}
     jumpTargetPosition: {x: 0, y: 0, z: 0}
     CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
-    CameraLocalPosition: {x: 0, y: 0, z: 0}
-    CameraRotation: 0
-    CameraDistance: 1
-    MoveTime: 8
-  - GravityDirection: 3
+    CameraLocalPosition: {x: 5, y: 0, z: 0.4}
+    LookZRotation: -90
+    MoveTime: 10
+  - GravityDirection: 2
     ForwardDirection: 4
-    CameraDirection: 5
     targetPosition: {x: -24.4, y: 1, z: 46.8}
     jumpTargetPosition: {x: 0, y: 0, z: 0}
     CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
-    CameraLocalPosition: {x: 0, y: 0, z: 0}
-    CameraRotation: 0
-    CameraDistance: 2
-    MoveTime: 8
+    CameraLocalPosition: {x: 1, y: 0, z: -4}
+    LookZRotation: 0
+    MoveTime: 10
+  - GravityDirection: 5
+    ForwardDirection: 2
+    targetPosition: {x: -65, y: 1, z: 48}
+    jumpTargetPosition: {x: 0, y: 0, z: 0}
+    CameraTargetLocalPosition: {x: -30, y: 0, z: -40}
+    CameraLocalPosition: {x: 10, y: 0, z: 10}
+    LookZRotation: 0
+    MoveTime: 10
+  - GravityDirection: 3
+    ForwardDirection: 5
+    targetPosition: {x: -66, y: 1, z: 10}
+    jumpTargetPosition: {x: 0, y: 0, z: 0}
+    CameraTargetLocalPosition: {x: 0, y: 0, z: 0}
+    CameraLocalPosition: {x: -3, y: 0, z: -20}
+    LookZRotation: 0
+    MoveTime: 10
