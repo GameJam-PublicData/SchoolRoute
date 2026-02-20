@@ -151,6 +151,11 @@ public class PlayerMover : MonoBehaviour
         canMove = true;
         Debug.Log($"Arrived at {data.JumpTargetPosition}");
     }
+
+    public void ResetPosition(Vector3 position = default)
+    {
+        // TODO: 位置リセットの際の挙動を調整
+    }
 }
 }
 

@@ -12,8 +12,10 @@ public class PlayerHealth : MonoBehaviour
     PlayerMover _mover;
     IFade _fade;
     ICountdownManager _countdown;
-    
+
+    GameObject grandParent;
     Vector3 respawnPoint;
+    
     
     [Inject]
     void Init(IFade fade, ICountdownManager countdown)
@@ -24,8 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        var grandParent = transform.parent.parent.gameObject;
-
+        grandParent = transform.parent.parent.gameObject;
         
         _hpManager = grandParent.GetComponent<PlayerHPManager>();
         _mover = grandParent.GetComponent<PlayerMover>();
@@ -36,8 +37,10 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("OnTriggerEnter");
         if(other.gameObject.CompareTag("SavePoint"))
         {
+            // ! 座標の保存
             // セーブポイントの更新
-            respawnPoint = transform.position;
+            respawnPoint = _mover.transform.position;
+            Debug.Log("Save Point Updated: " + respawnPoint);
         }
         if(other.gameObject.CompareTag("DeathZone"))
         {
@@ -48,17 +51,15 @@ public class PlayerHealth : MonoBehaviour
             
             var duration = 1.5f;
             
-            // フェードイン・フェードアウトとプレイヤーの移動
-            _fade.FadeIn(duration, MoveRespawnPoint);
-            await UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5));
+            // フェードイン
+            _fade.FadeIn(duration, () => _mover.ResetPosition(respawnPoint));
+            
+            // 待機
+            await UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)); // TODO: フェードインの完了を正確に待つ
+            
+            // フィードアウト
             _fade.FadeOut(duration, () => _countdown.StartCountdown(() => _mover.canMove = true));
         }
-    }
-
-    void MoveRespawnPoint()
-    {
-        Debug.Log("Moving to respawn point: " + respawnPoint);
-        transform.position = respawnPoint;
     }
 }
 }
