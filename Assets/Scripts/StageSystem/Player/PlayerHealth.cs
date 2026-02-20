@@ -54,6 +54,17 @@ public class PlayerHealth : MonoBehaviour
             
         var duration = 1.5f;
         // フェードイン
+        var yMover = GetComponentInChildren<YMover>();
+        if (yMover != null)
+        {
+            Debug.Log("yMover.yInput = false");
+            yMover.yInput = false;
+        }
+        else
+        {
+            Debug.LogError("yMover is null");
+        }
+        
         _fade.FadeIn(duration, () => _mover.ResetPosition(respawnPoint));
         UniTask.Delay(TimeSpan.FromSeconds(duration + 0.5)).ContinueWith(() =>
         {
@@ -80,6 +91,11 @@ public class PlayerHealth : MonoBehaviour
                 FallChack = true;
                 _mover.canMove = true;
                 _jumpManager.ResetJump();
+                if (yMover != null)
+                {
+                    Debug.Log("yMover.yInput = true");
+                    yMover.yInput = true;
+                }
             })); 
         });
 

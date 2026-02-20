@@ -7,7 +7,7 @@ namespace StageSystem.Player
 {
 public class YMover : MonoBehaviour
 {
-    [SerializeField] bool yInput = true;
+    [SerializeField] public bool yInput = true;
     void Start()
     {
         _inputActions = new InputActions();
