@@ -23,10 +23,11 @@ public class NotEnemyEnemy : MonoBehaviour,IEnemy
     void OnTriggerEnter(Collider collision)
     {
         var player = collision.GetComponentInParent<PlayerHealth>();
+        var playerHPManager = collision.GetComponentInParent<PlayerHPManager>();
 
         if (player != null)
         {
-            player.PlayerDamaged();
+            playerHPManager.TakeDamage(damage);
         }
     }
     
