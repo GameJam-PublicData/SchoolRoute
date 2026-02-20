@@ -429,6 +429,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResultHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 3308101842370952843, guid: 2a2f9c258355041838256fa41ae15d15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4558449132850217101, guid: 2a2f9c258355041838256fa41ae15d15, type: 3}
       propertyPath: m_Pivot.x
       value: 0
