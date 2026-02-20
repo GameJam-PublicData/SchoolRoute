@@ -56,11 +56,7 @@ public class PlayerMover : MonoBehaviour
         else _playerForward.ChangeForwardDirection(_currentRouteData.ForwardDirection);
         //カメラ更新(仮)//todo
         //cameraSystem.SetRotation(_currentRouteData.CameraDirection, _currentRouteData.CameraRotation, _currentRouteData.CameraDistance);
-        UniTask.Delay(TimeSpan.FromSeconds(jumpTime)).ContinueWith(() =>
-        {
-        }).Forget();
         if (!isStart)  cameraSystem.SetRotation(_currentRouteData.CameraTargetLocalPosition, _currentRouteData.CameraLocalPosition, _currentRouteData.LookZRotation);
-
         //スピード更新
         _currentSpeed = Vector3.Distance(transform.position, _targetPosition) / _currentRouteData.MoveTime;
         if (isStart)
