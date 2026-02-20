@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 1419773100706497126}
   - component: {fileID: 968887242148069800}
   - component: {fileID: 343399111972981344}
+  - component: {fileID: 5676634999402053375}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -323,6 +324,7 @@ MonoBehaviour:
   canMove: 1
   cameraSystem: {fileID: 1112997559791053512}
   gravityJumpForce: 10
+  nextRouteIndex: 0
 --- !u!114 &968887242148069800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +356,18 @@ MonoBehaviour:
   _currentHP: 0
   playerAnimationController: {fileID: 3353304391098950532}
   interval: 1
+--- !u!114 &5676634999402053375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7006389587667983874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60546686a264177878ae3e4e1bf81b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Player.PlayerHealth
 --- !u!1 &8320655647441811761
 GameObject:
   m_ObjectHideFlags: 0

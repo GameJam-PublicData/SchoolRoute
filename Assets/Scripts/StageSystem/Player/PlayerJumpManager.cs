@@ -22,8 +22,8 @@ public class PlayerJumpManager : MonoBehaviour
     IReadOnlyGravitySystem _gravitySystem;
     CancellationTokenSource _jumpCTS = new();
     [SerializeField]bool isJumping = true;
-    [SerializeField]int groundCount;
-    [SerializeField] bool debugNoGraavity = false;
+    [SerializeField]int groundCount; 
+    bool debugNoGraavity = false;
 
     [Inject]
     public void Construct(IReadOnlyGravitySystem gravitySystem)
@@ -107,6 +107,16 @@ public class PlayerJumpManager : MonoBehaviour
         }
     }
     
+    public void StopJump()
+    {
+        isJumping = false;
+        _currentJumpForce = 0;
+        groundCount = 0;
+    }
+    public void ResetJump()
+    {
+        isJumping = true;
+    }
     
     async UniTask JumpAsync(CancellationToken token)
     {

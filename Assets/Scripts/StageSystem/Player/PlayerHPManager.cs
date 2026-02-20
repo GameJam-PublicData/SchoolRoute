@@ -43,7 +43,7 @@ public class PlayerHPManager : MonoBehaviour
             return false; // 無敵状態ならダメージを受けない
         }
         _currentHP -= damage;
-        AudioManager.Instance.PlaySE("PlayerDamageSE");
+        //AudioManager.Instance.PlaySE("PlayerDamageSE");
         playerAnimationController .PlayerDamaged();
         
         // UIの更新

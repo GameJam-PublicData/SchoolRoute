@@ -7,13 +7,14 @@ using VContainer;
 namespace StageSystem.Player
 {
 public class PlayerMover : MonoBehaviour
-{
-    [SerializeField] StageRouteSO stageRouteSO;
+{ 
+    public StageRouteSO stageRouteSO;
     [SerializeField] float jumpTime = 1f;
-    [SerializeField] bool canMove = true;
+    [SerializeField] public bool canMove = true;
     IGravitySystem _gravitySystem;
     [SerializeField] CameraSystem cameraSystem;
     [SerializeField] float gravityJumpForce = 10f;
+    
     [Inject]
     public void Construct(IGravitySystem gravitySystem)
     {
@@ -21,13 +22,14 @@ public class PlayerMover : MonoBehaviour
     }
 
     PlayerForward _playerForward;
+
     void Awake()
     {
         _playerForward = GetComponentInChildren<PlayerForward>();
     }
 
     StageRouteData _currentRouteData;
-    int _currentRouteIndex = 0;
+    public int nextRouteIndex = 0;
     Vector3 _targetPosition;
     float _currentSpeed = 0.01f;
     
@@ -36,17 +38,17 @@ public class PlayerMover : MonoBehaviour
         UpdateRouteData(true);
     }
     // 現在のルートデータを更新するメソッド
-    void UpdateRouteData(bool isStart = false)
+    public void UpdateRouteData(bool isStart = false)
     {
-        if (_currentRouteIndex >= stageRouteSO.RouteDataList.Count) return;
+        if (nextRouteIndex >= stageRouteSO.RouteDataList.Count) return;
         transform.DOKill(); 
         
         var oldData = _currentRouteData;
-        _currentRouteData = stageRouteSO.RouteDataList[_currentRouteIndex];
-        Debug.Log($"Route {_currentRouteIndex} started. Gravity: {_currentRouteData.GravityDirection}, Forward: {_currentRouteData.ForwardDirection}, Target: {_currentRouteData.TargetPosition}");
+        _currentRouteData = stageRouteSO.RouteDataList[nextRouteIndex];
+        Debug.Log($"Route {nextRouteIndex} started. Gravity: {_currentRouteData.GravityDirection}, Forward: {_currentRouteData.ForwardDirection}, Target: {_currentRouteData.TargetPosition}");
         _targetPosition = _currentRouteData.TargetPosition;
         
-        if (_currentRouteIndex!=0&&_currentRouteData.GravityDirection == stageRouteSO.RouteDataList[_currentRouteIndex - 1].GravityDirection)
+        if (nextRouteIndex!=0&&_currentRouteData.GravityDirection == stageRouteSO.RouteDataList[nextRouteIndex - 1].GravityDirection)
         {
             //同じ重力方向の場合はプレイヤーの向きをすばやく変える
             _playerForward.ChangeForwardDirection(_currentRouteData.ForwardDirection,0.1f);
@@ -64,7 +66,7 @@ public class PlayerMover : MonoBehaviour
         if (isStart)
         {
             _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
-            _currentRouteIndex++;
+            nextRouteIndex++;
             _gravitySystem.ChangeGravity(_currentRouteData.GravityDirection);
             return;
         }
@@ -82,8 +84,7 @@ public class PlayerMover : MonoBehaviour
         }
         
         
-        _currentRouteIndex++;
-       
+        nextRouteIndex++;
     }
 
     void Update()
@@ -91,6 +92,7 @@ public class PlayerMover : MonoBehaviour
         if(_currentRouteData == null) return;
         if(!canMove) return;
         // プレイヤーの移動処理
+        
         transform.position = Vector3.MoveTowards(transform.position, _targetPosition , Time.deltaTime * _currentSpeed);
         
         // プレイヤーが目的地に到達したかどうかをチェック
@@ -149,8 +151,11 @@ public class PlayerMover : MonoBehaviour
         canMove = true;
         Debug.Log($"Arrived at {data.JumpTargetPosition}");
     }
+
+    public void ResetPosition(Vector3 position = default)
+    {
+        // TODO: 位置リセットの際の挙動を調整
+    }
 }
-
-
 }
 
