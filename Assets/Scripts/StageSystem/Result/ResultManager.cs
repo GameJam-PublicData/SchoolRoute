@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -17,8 +19,9 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] GameObject winIcon;
     [SerializeField] GameObject loseIcon;
-    
-    void Awake()
+    [SerializeField] GameObject Canvas;
+
+    void Start()
     {
         //シングルトン
         if (Instance == null || Instance != this)
@@ -26,9 +29,7 @@ public class ResultManager : MonoBehaviour
             Instance = this;
         }
         
-        //コールバック登録
-        goMainmenuButton.onClick.AddListener(GoMainMenu);
-        resultPanel.gameObject.SetActive(false);
+
     }
 
     ISceneLoader _sceneLoader;
@@ -37,14 +38,17 @@ public class ResultManager : MonoBehaviour
     public void Construct(ISceneLoader sceneLoader)
     {
         _sceneLoader = sceneLoader;
+        //コールバック登録
+        goMainmenuButton.onClick.AddListener(GoMainMenu);
+        resultPanel.gameObject.SetActive(false);
     }
     
-    void GoMainMenu()
+    public void GoMainMenu()
     {
         Debug.Log("Go MainMenu");
         Time.timeScale = 1;
         AudioManager.Instance.PlaySE("ButtonSE");
-        _sceneLoader.LoadScene(SceneType.MainMenuScene);
+        _sceneLoader?.LoadScene(SceneType.MainMenuScene).Forget();
     }
 
     public void Clear()
@@ -54,6 +58,7 @@ public class ResultManager : MonoBehaviour
         resultPanel.gameObject.SetActive(true);
         winIcon.SetActive(true);
         loseIcon.SetActive(false);
+        Canvas.SetActive(false);
         resultPanel.DOAnchorPosY(0, 1f).SetEase(Ease.OutBounce).SetUpdate(true);
     }
 
