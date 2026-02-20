@@ -4,7 +4,6 @@ using MainSystem.Scene;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-using UnityEngine.SceneManagement;
 
 namespace MainMenu
 {
@@ -20,7 +19,13 @@ public class MainMenuManager : MonoBehaviour
     float _licenseTextDefaultX = -2000f;
     
     bool _canClick = true;
+    ISceneLoader _sceneLoader;
     
+    [Inject]
+    public void Construct(ISceneLoader sceneLoader)
+    {
+        _sceneLoader = sceneLoader;
+    }
 
     void Start()
     {
@@ -42,9 +47,8 @@ public class MainMenuManager : MonoBehaviour
     /// </summary>
     void OnStartButton()
     {
-        
-            AudioManager.Instance.PlaySE("ButtonSE");
-            SceneManager.LoadScene("Stage1Scene");
+        AudioManager.Instance.PlaySE("ButtonSE");
+        _sceneLoader.LoadScene(SceneType.Stage1Scene);
     }
     
     /// <summary>

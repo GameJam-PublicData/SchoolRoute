@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerJumpSE
   m_EditorClassIdentifier: Assembly-CSharp::MainSystem.Audio.SoundData
   category: 2
-  soundName: PlayerDamageSE
-  clip: {fileID: 8300000, guid: 19e552cc05d134390b4ecb0bec687aa4, type: 3}
+  soundName: PlayerJumpSE
+  clip: {fileID: 8300000, guid: c5527183861a54c31837e4fd190e66ea, type: 3}
   volume: 1
   loop: 0
