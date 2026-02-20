@@ -165,7 +165,7 @@ public class PlayerJumpManager : MonoBehaviour
     };
 
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.CompareTag("Ground"))
         {
@@ -182,7 +182,7 @@ public class PlayerJumpManager : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+    void OnCollisionExit(Collision other)
     {
         if(other.gameObject.CompareTag("Ground"))
         {
@@ -193,6 +193,16 @@ public class PlayerJumpManager : MonoBehaviour
                 isJumping = true;
             }
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+
     }
 
 

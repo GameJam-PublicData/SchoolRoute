@@ -48,7 +48,12 @@ public class ResultManager : MonoBehaviour
         Debug.Log("Go MainMenu");
         Time.timeScale = 1;
         AudioManager.Instance.PlaySE("ButtonSE");
-        _sceneLoader?.LoadScene(SceneType.MainMenuScene).Forget();
+        if(_sceneLoader == null)
+        {
+            Debug.LogError("SceneLoader is not injected in ResultManager.");
+            return;
+        }
+        _sceneLoader.LoadScene(SceneType.MainMenuScene).Forget();
     }
 
     public void Clear()
