@@ -25,7 +25,7 @@ public class NotEnemyEnemy : MonoBehaviour,IEnemy
         var player = collision.GetComponentInParent<PlayerHPManager>();
 
         if (player != null)
-        { 
+        {
             player.TakeDamage(damage);
         }
     }

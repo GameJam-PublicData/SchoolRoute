@@ -703,6 +703,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 811007686671026309, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
   m_PrefabInstance: {fileID: 173791430}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &207064158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5826632637453719979, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+  m_PrefabInstance: {fileID: 1831782204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &207064160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207064158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
 --- !u!1001 &218997183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2100,6 +2118,73 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1753314482}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &521855712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 521855715}
+  - component: {fileID: 521855714}
+  - component: {fileID: 521855713}
+  m_Layer: 0
+  m_Name: DamageArea (2)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &521855713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521855712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
+--- !u!65 &521855714
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521855712}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &521855715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521855712}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.2, y: 1, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527888281
 GameObject:
@@ -3600,6 +3685,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 811007686671026309, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
   m_PrefabInstance: {fileID: 919775173}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &923798905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6415270051583643063, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+  m_PrefabInstance: {fileID: 1831782204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &923798907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923798905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
 --- !u!1001 &937731115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5140,6 +5243,140 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 811007686671026309, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
   m_PrefabInstance: {fileID: 1271208791}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1276318743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276318746}
+  - component: {fileID: 1276318745}
+  - component: {fileID: 1276318744}
+  m_Layer: 0
+  m_Name: DamageArea (1)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1276318744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276318743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
+--- !u!65 &1276318745
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276318743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.4, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1276318746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276318743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.4, y: 1, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1278397907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278397910}
+  - component: {fileID: 1278397909}
+  - component: {fileID: 1278397908}
+  m_Layer: 0
+  m_Name: DamageArea (3)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1278397908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278397907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
+--- !u!65 &1278397909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278397907}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8, y: 2, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1278397910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278397907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -65, y: 1, z: 42.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1290006826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7914,7 +8151,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6415270051583643063, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 923798907}
+    - targetCorrespondingSourceObject: {fileID: 5826632637453719979, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 207064160}
+    - targetCorrespondingSourceObject: {fileID: 4526269778970532132, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2133017766}
+    - targetCorrespondingSourceObject: {fileID: 4958408146601786654, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2118119877}
   m_SourcePrefab: {fileID: 100100000, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
 --- !u!1001 &1855898724
 PrefabInstance:
@@ -8310,6 +8559,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 202475961935476635, guid: 106ce8a4509b040dba547866b2435d01, type: 3}
   m_PrefabInstance: {fileID: 1928831292}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1937884699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1937884702}
+  - component: {fileID: 1937884701}
+  - component: {fileID: 1937884700}
+  m_Layer: 0
+  m_Name: DamageArea
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1937884700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937884699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
+--- !u!65 &1937884701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937884699}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.4, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1937884702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937884699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.4, y: 0.2, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1965804922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9000,6 +9316,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db20c240cf9bb4ce5ad6d5754ba6d20c, type: 3}
+--- !u!1 &2118119875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4958408146601786654, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+  m_PrefabInstance: {fileID: 1831782204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2118119877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118119875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
 --- !u!1001 &2119832266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9160,6 +9494,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 202475961935476635, guid: 106ce8a4509b040dba547866b2435d01, type: 3}
   m_PrefabInstance: {fileID: 2132796510}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2133017764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4526269778970532132, guid: a0ad5d2dda62b46f196af2713d502c9b, type: 3}
+  m_PrefabInstance: {fileID: 1831782204}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2133017766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133017764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9ba610c91144ba7b5ce41ee53eae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageSystem.Enemy.NotEnemyEnemy
+  damage: 1
 --- !u!1001 &2135145957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9526,3 +9878,7 @@ SceneRoots:
   - {fileID: 1703251919}
   - {fileID: 688244033}
   - {fileID: 1013865818}
+  - {fileID: 1937884702}
+  - {fileID: 1276318746}
+  - {fileID: 521855715}
+  - {fileID: 1278397910}
